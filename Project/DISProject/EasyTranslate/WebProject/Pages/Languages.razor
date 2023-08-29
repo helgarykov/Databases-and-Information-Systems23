@@ -1,0 +1,46 @@
+@page "/retrivealllanguages"
+
+<PageTitle>View All Language</PageTitle>
+
+@using BlazorProject.Data
+@using global::Data.Models
+@using global::Data.Services
+@using Task = System.Threading.Tasks.Task
+@inject LanguageService LanguageService
+
+<h1>All Languages</h1>
+
+@if (languages == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NameOfLang</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var language in languages)
+            {
+                <tr>
+                    <td>@language.Id</td>
+                    <td>@language.NameOfLang</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+    private IEnumerable<Language>? languages;
+
+    protected override void OnInitialized()
+    {
+        languages = LanguageService.GetAllLanguagesViaDapper();
+    }
+}
+
+

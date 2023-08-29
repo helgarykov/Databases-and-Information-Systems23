@@ -1,0 +1,106 @@
+@page "/retrievefees"
+
+@using BlazorProject.Data
+@using Dapper
+@using global::Data.ViewModels
+@using global::Data.Models
+@using global::Data.Services
+@using Task = System.Threading.Tasks.Task
+@inject FeesAndCategories Fee
+@inject TranslatorWithLowestFeeService LowestFee
+@inject LoginIdentity Identity
+
+<h5>Get German Translators and their Fees — from Lowest to Highest</h5>
+
+<button class="btn btn-primary" @onclick="GetLowestFees">Click me</button>
+<button class="btn btn-primary" @onclick="OnInitialized">Reset</button>
+
+<h3>View Translator Fees</h3>
+
+@if (fees == null && lowestFees == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                @if(!isLowestActive)
+                {
+                    <th>Id</th>
+                    <th>Category</th>
+                    <th>Oral fee</th>
+                    <th>Written fee</th>
+                    <th>Phone fee</th>
+                    <th>Transport cost fee</th>
+                    <th>Transport time fee</th>
+                }
+                else
+                {
+                    <th>Contact name</th>
+                    <th>Language</th>
+                    <th>Oral fee</th>
+                    <th>Written fee</th>
+                    <th>Phone fee</th>
+                    <th>Transport cost fee</th>
+                    <th>Transport time fee</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if(!isLowestActive)
+            {
+                @foreach (var fee in fees)
+                {
+                    <tr>
+                        <td>@fee.Id</td>
+                        <td>@fee.CategoryName</td>
+                        <td>@fee.OralFee</td>
+                        <td>@fee.WrittenFee</td>
+                        <td>@fee.PhoneFee</td>
+                        <td>@fee.TransportCostFee</td>
+                        <td>@fee.TransportTimeFee</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                @foreach (var fee in lowestFees)
+                {
+                    <tr>
+                        <td>@fee.ContactName</td>
+                        <td>@fee.Language</td>
+                        <td>@fee.OralFee</td>
+                        <td>@fee.WrittenFee</td>
+                        <td>@fee.PhoneFee</td>
+                        <td>@fee.TransportCostFee</td>
+                        <td>@fee.TransportTimeFee</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private bool isLowestActive; // should become an enum for expansion, however this will do for now.
+
+    private IEnumerable<Category>? fees;
+    private IEnumerable<TranslatorWithLowestFee>? lowestFees;
+
+    protected override void OnInitialized()
+    {
+        fees = Fee.GetFeesViaDapper();
+        isLowestActive = false;
+    }
+
+    protected void GetLowestFees()
+    {
+        lowestFees = LowestFee.GetTranslatorFeesFromLowestToHighest();
+        isLowestActive = true;
+    }
+
+}

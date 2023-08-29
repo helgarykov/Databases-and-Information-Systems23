@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)https://dbis-uibk.github.io/relax/help#relalg-operations-orderby -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>RelaX - relational algebra calculator</title>
+	<!-- 
+		Copyright 2016 Johannes Kessler
+		
+		This Source Code Form is subject to the terms of the Mozilla Public
+		License, v. 2.0. If a copy of the MPL was not distributed with this
+		file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+	-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="The relational algebra calculator helps you learn relational algebra (RelAlg) by executing it.">
+	<meta name="keywords" content="relational algebra, relationale algebra, relationale algebra rechner, relational algebra online tool">
+	<meta name="author" content="Kessler Johannes">
+
+	<style type="text/css">:root, :host {
+  --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Solid";
+  --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Regular";
+  --fa-font-light: normal 300 1em/1 "Font Awesome 6 Light";
+  --fa-font-thin: normal 100 1em/1 "Font Awesome 6 Thin";
+  --fa-font-duotone: normal 900 1em/1 "Font Awesome 6 Duotone";
+  --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
+}
+
+svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
+  overflow: visible;
+  box-sizing: content-box;
+}
+
+.svg-inline--fa {
+  display: var(--fa-display, inline-block);
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+.svg-inline--fa.fa-2xs {
+  vertical-align: 0.1em;
+}
+.svg-inline--fa.fa-xs {
+  vertical-align: 0em;
+}
+.svg-inline--fa.fa-sm {
+  vertical-align: -0.0714285705em;
+}
+.svg-inline--fa.fa-lg {
+  vertical-align: -0.2em;
+}
+.svg-inline--fa.fa-xl {
+  vertical-align: -0.25em;
+}
+.svg-inline--fa.fa-2xl {
+  vertical-align: -0.3125em;
+}
+.svg-inline--fa.fa-pull-left {
+  margin-right: var(--fa-pull-margin, 0.3em);
+  width: auto;
+}
+.svg-inline--fa.fa-pull-right {
+  margin-left: var(--fa-pull-margin, 0.3em);
+  width: auto;
+}
+.svg-inline--fa.fa-li {
+  width: var(--fa-li-width, 2em);
+  top: 0.25em;
+}
+.svg-inline--fa.fa-fw {
+  width: var(--fa-fw-width, 1.25em);
+}
+
+.fa-layers svg.svg-inline--fa {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.fa-layers-counter, .fa-layers-text {
+  display: inline-block;
+  position: absolute;
+  text-align: center;
+}
+
+.fa-layers {
+  display: inline-block;
+  height: 1em;
+  position: relative;
+  text-align: center;
+  vertical-align: -0.125em;
+  width: 1em;
+}
+.fa-layers svg.svg-inline--fa {
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+}
+
+.fa-layers-text {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+}
+
+.fa-layers-counter {
+  background-color: var(--fa-counter-background-color, #ff253a);
+  border-radius: var(--fa-counter-border-radius, 1em);
+  box-sizing: border-box;
+  color: var(--fa-inverse, #fff);
+  line-height: var(--fa-counter-line-height, 1);
+  max-width: var(--fa-counter-max-width, 5em);
+  min-width: var(--fa-counter-min-width, 1.5em);
+  overflow: hidden;
+  padding: var(--fa-counter-padding, 0.25em 0.5em);
+  right: var(--fa-right, 0);
+  text-overflow: ellipsis;
+  top: var(--fa-top, 0);
+  -webkit-transform: scale(var(--fa-counter-scale, 0.25));
+          transform: scale(var(--fa-counter-scale, 0.25));
+  -webkit-transform-origin: top right;
+          transform-origin: top right;
+}
+
+.fa-layers-bottom-right {
+  bottom: var(--fa-bottom, 0);
+  right: var(--fa-right, 0);
+  top: auto;
+  -webkit-transform: scale(var(--fa-layers-scale, 0.25));
+          transform: scale(var(--fa-layers-scale, 0.25));
+  -webkit-transform-origin: bottom right;
+          transform-origin: bottom right;
+}
+
+.fa-layers-bottom-left {
+  bottom: var(--fa-bottom, 0);
+  left: var(--fa-left, 0);
+  right: auto;
+  top: auto;
+  -webkit-transform: scale(var(--fa-layers-scale, 0.25));
+          transform: scale(var(--fa-layers-scale, 0.25));
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left;
+}
+
+.fa-layers-top-right {
+  top: var(--fa-top, 0);
+  right: var(--fa-right, 0);
+  -webkit-transform: scale(var(--fa-layers-scale, 0.25));
+          transform: scale(var(--fa-layers-scale, 0.25));
+  -webkit-transform-origin: top right;
+          transform-origin: top right;
+}
+
+.fa-layers-top-left {
+  left: var(--fa-left, 0);
+  right: auto;
+  top: var(--fa-top, 0);
+  -webkit-transform: scale(var(--fa-layers-scale, 0.25));
+          transform: scale(var(--fa-layers-scale, 0.25));
+  -webkit-transform-origin: top left;
+          transform-origin: top left;
+}
+
+.fa-1x {
+  font-size: 1em;
+}
+
+.fa-2x {
+  font-size: 2em;
+}
+
+.fa-3x {
+  font-size: 3em;
+}
+
+.fa-4x {
+  font-size: 4em;
+}
+
+.fa-5x {
+  font-size: 5em;
+}
+
+.fa-6x {
+  font-size: 6em;
+}
+
+.fa-7x {
+  font-size: 7em;
+}
+
+.fa-8x {
+  font-size: 8em;
+}
+
+.fa-9x {
+  font-size: 9em;
+}
+
+.fa-10x {
+  font-size: 10em;
+}
+
+.fa-2xs {
+  font-size: 0.625em;
+  line-height: 0.1em;
+  vertical-align: 0.225em;
+}
+
+.fa-xs {
+  font-size: 0.75em;
+  line-height: 0.0833333337em;
+  vertical-align: 0.125em;
+}
+
+.fa-sm {
+  font-size: 0.875em;
+  line-height: 0.0714285718em;
+  vertical-align: 0.0535714295em;
+}
+
+.fa-lg {
+  font-size: 1.25em;
+  line-height: 0.05em;
+  vertical-align: -0.075em;
+}
+
+.fa-xl {
+  font-size: 1.5em;
+  line-height: 0.0416666682em;
+  vertical-align: -0.125em;
+}
+
+.fa-2xl {
+  font-size: 2em;
+  line-height: 0.03125em;
+  vertical-align: -0.1875em;
+}
+
+.fa-fw {
+  text-align: center;
+  width: 1.25em;
+}
+
+.fa-ul {
+  list-style-type: none;
+  margin-left: var(--fa-li-margin, 2.5em);
+  padding-left: 0;
+}
+.fa-ul > li {
+  position: relative;
+}
+
+.fa-li {
+  left: calc(var(--fa-li-width, 2em) * -1);
+  position: absolute;
+  text-align: center;
+  width: var(--fa-li-width, 2em);
+  line-height: inherit;
+}
+
+.fa-border {
+  border-color: var(--fa-border-color, #eee);
+  border-radius: var(--fa-border-radius, 0.1em);
+  border-style: var(--fa-border-style, solid);
+  border-width: var(--fa-border-width, 0.08em);
+  padding: var(--fa-border-padding, 0.2em 0.25em 0.15em);
+}
+
+.fa-pull-left {
+  float: left;
+  margin-right: var(--fa-pull-margin, 0.3em);
+}
+
+.fa-pull-right {
+  float: right;
+  margin-left: var(--fa-pull-margin, 0.3em);
+}
+
+.fa-beat {
+  -webkit-animation-name: fa-beat;
+          animation-name: fa-beat;
+  -webkit-animation-delay: var(--fa-animation-delay, 0);
+          animation-delay: var(--fa-animation-delay, 0);
+  -webkit-animation-direction: var(--fa-animation-direction, normal);
+          animation-direction: var(--fa-animation-direction, normal);
+  -webkit-animation-duration: var(--fa-animation-duration, 1s);
+          animation-duration: var(--fa-animation-duration, 1s);
+  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+          animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  -webkit-animation-timing-function: var(--fa-animation-timing, ease-in-out);
+          animation-timing-function: var(--fa-animation-timing, ease-in-out);
+}
+
+.fa-bounce {
+  -webkit-animation-name: fa-bounce;
+          animation-name: fa-bounce;
+  -webkit-animation-delay: var(--fa-animation-delay, 0);
+          animation-delay: var(--fa-animation-delay, 0);
+  -webkit-animation-direction: var(--fa-animation-direction, normal);
+          animation-direction: var(--fa-animation-direction, normal);
+  -webkit-animation-duration: var(--fa-animation-duration, 1s);
+          animation-duration: var(--fa-animation-duration, 1s);
+  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+          animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  -webkit-animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.28, 0.84, 0.42, 1));
+          animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.28, 0.84, 0.42, 1));
+}
+
+.fa-fade {
+  -webkit-animation-name: fa-fade;
+          animation-name: fa-fade;
+  -webkit-animation-delay: var(--fa-animation-delay, 0);
+          animation-delay: var(--fa-animation-delay, 0);
+  -webkit-animation-direction: var(--fa-animation-direction, normal);
+          animation-direction: var(--fa-animation-direction, normal);
+  -webkit-animation-duration: var(--fa-animation-duration, 1s);
+          animation-duration: var(--fa-animation-duration, 1s);
+  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+          animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  -webkit-animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+          animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+}
+
+.fa-beat-fade {
+  -webkit-animation-name: fa-beat-fade;
+          animation-name: fa-beat-fade;
+  -webkit-animation-delay: var(--fa-animation-delay, 0);
+          animation-delay: var(--fa-animation-delay, 0);
+  -webkit-animation-direction: var(--fa-animation-direction, normal);
+          animation-direction: var(--fa-animation-direction, normal);
+  -webkit-animation-duration: var(--fa-animation-duration, 1s);
+          animation-duration: var(--fa-animation-duration, 1s);
+  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+          animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  -webkit-animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+          animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+}
+
+.fa-flip {
+  -webkit-animation-name: fa-flip;
+          animation-name: fa-flip;
+  -webkit-animation-delay: var(--fa-animation-delay, 0);
+          animation-delay: var(--fa-animation-delay, 0);
+  -webkit-animation-direction: var(--fa-animation-direction, normal);
+          animation-direction: var(--fa-animation-direction, normal);
+  -webkit-animation-duration: var(--fa-animation-duration, 1s);
+          animation-duration: var(--fa-animation-duration, 1s);
+  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+          animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  -webkit-animation-timing-function: var(--fa-animation-timing, ease-in-out);
+          animation-timing-function: var(--fa-animation-timing, ease-in-out);
+}
+
+.fa-shake {
+  -webkit-animation-name: fa-shake;
+          animation-name: fa-shake;
+  -webkit-animation-delay: var(--fa-animation-delay, 0);
+          animation-delay: var(--fa-animation-delay, 0);
+  -webkit-animation-direction: var(--fa-animation-direction, normal);
+          animation-direction: var(--fa-animation-direction, normal);
+  -webkit-animation-duration: var(--fa-animation-duration, 1s);
+          animation-duration: var(--fa-animation-duration, 1s);
+  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+          animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  -webkit-animation-timing-function: var(--fa-animation-timing, linear);
+          animation-timing-function: var(--fa-animation-timing, linear);
+}
+
+.fa-spin {
+  -webkit-animation-name: fa-spin;
+          animation-name: fa-spin;
+  -webkit-animation-delay: var(--fa-animation-delay, 0);
+          animation-delay: var(--fa-animation-delay, 0);
+  -webkit-animation-direction: var(--fa-animation-direction, normal);
+          animation-direction: var(--fa-animation-direction, normal);
+  -webkit-animation-duration: var(--fa-animation-duration, 2s);
+          animation-duration: var(--fa-animation-duration, 2s);
+  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+          animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  -webkit-animation-timing-function: var(--fa-animation-timing, linear);
+          animation-timing-function: var(--fa-animation-timing, linear);
+}
+
+.fa-spin-reverse {
+  --fa-animation-direction: reverse;
+}
+
+.fa-pulse,
+.fa-spin-pulse {
+  -webkit-animation-name: fa-spin;
+          animation-name: fa-spin;
+  -webkit-animation-direction: var(--fa-animation-direction, normal);
+          animation-direction: var(--fa-animation-direction, normal);
+  -webkit-animation-duration: var(--fa-animation-duration, 1s);
+          animation-duration: var(--fa-animation-duration, 1s);
+  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+          animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  -webkit-animation-timing-function: var(--fa-animation-timing, steps(8));
+          animation-timing-function: var(--fa-animation-timing, steps(8));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fa-beat,
+.fa-bounce,
+.fa-fade,
+.fa-beat-fade,
+.fa-flip,
+.fa-pulse,
+.fa-shake,
+.fa-spin,
+.fa-spin-pulse {
+    -webkit-animation-delay: -1ms;
+            animation-delay: -1ms;
+    -webkit-animation-duration: 1ms;
+            animation-duration: 1ms;
+    -webkit-animation-iteration-count: 1;
+            animation-iteration-count: 1;
+    transition-delay: 0s;
+    transition-duration: 0s;
+  }
+}
+@-webkit-keyframes fa-beat {
+  0%, 90% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  45% {
+    -webkit-transform: scale(var(--fa-beat-scale, 1.25));
+            transform: scale(var(--fa-beat-scale, 1.25));
+  }
+}
+@keyframes fa-beat {
+  0%, 90% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  45% {
+    -webkit-transform: scale(var(--fa-beat-scale, 1.25));
+            transform: scale(var(--fa-beat-scale, 1.25));
+  }
+}
+@-webkit-keyframes fa-bounce {
+  0% {
+    -webkit-transform: scale(1, 1) translateY(0);
+            transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    -webkit-transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);
+            transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);
+  }
+  30% {
+    -webkit-transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));
+            transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));
+  }
+  50% {
+    -webkit-transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);
+            transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);
+  }
+  57% {
+    -webkit-transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));
+            transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));
+  }
+  64% {
+    -webkit-transform: scale(1, 1) translateY(0);
+            transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    -webkit-transform: scale(1, 1) translateY(0);
+            transform: scale(1, 1) translateY(0);
+  }
+}
+@keyframes fa-bounce {
+  0% {
+    -webkit-transform: scale(1, 1) translateY(0);
+            transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    -webkit-transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);
+            transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);
+  }
+  30% {
+    -webkit-transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));
+            transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));
+  }
+  50% {
+    -webkit-transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);
+            transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);
+  }
+  57% {
+    -webkit-transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));
+            transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));
+  }
+  64% {
+    -webkit-transform: scale(1, 1) translateY(0);
+            transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    -webkit-transform: scale(1, 1) translateY(0);
+            transform: scale(1, 1) translateY(0);
+  }
+}
+@-webkit-keyframes fa-fade {
+  50% {
+    opacity: var(--fa-fade-opacity, 0.4);
+  }
+}
+@keyframes fa-fade {
+  50% {
+    opacity: var(--fa-fade-opacity, 0.4);
+  }
+}
+@-webkit-keyframes fa-beat-fade {
+  0%, 100% {
+    opacity: var(--fa-beat-fade-opacity, 0.4);
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    -webkit-transform: scale(var(--fa-beat-fade-scale, 1.125));
+            transform: scale(var(--fa-beat-fade-scale, 1.125));
+  }
+}
+@keyframes fa-beat-fade {
+  0%, 100% {
+    opacity: var(--fa-beat-fade-opacity, 0.4);
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    -webkit-transform: scale(var(--fa-beat-fade-scale, 1.125));
+            transform: scale(var(--fa-beat-fade-scale, 1.125));
+  }
+}
+@-webkit-keyframes fa-flip {
+  50% {
+    -webkit-transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+            transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+  }
+}
+@keyframes fa-flip {
+  50% {
+    -webkit-transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+            transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+  }
+}
+@-webkit-keyframes fa-shake {
+  0% {
+    -webkit-transform: rotate(-15deg);
+            transform: rotate(-15deg);
+  }
+  4% {
+    -webkit-transform: rotate(15deg);
+            transform: rotate(15deg);
+  }
+  8%, 24% {
+    -webkit-transform: rotate(-18deg);
+            transform: rotate(-18deg);
+  }
+  12%, 28% {
+    -webkit-transform: rotate(18deg);
+            transform: rotate(18deg);
+  }
+  16% {
+    -webkit-transform: rotate(-22deg);
+            transform: rotate(-22deg);
+  }
+  20% {
+    -webkit-transform: rotate(22deg);
+            transform: rotate(22deg);
+  }
+  32% {
+    -webkit-transform: rotate(-12deg);
+            transform: rotate(-12deg);
+  }
+  36% {
+    -webkit-transform: rotate(12deg);
+            transform: rotate(12deg);
+  }
+  40%, 100% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+}
+@keyframes fa-shake {
+  0% {
+    -webkit-transform: rotate(-15deg);
+            transform: rotate(-15deg);
+  }
+  4% {
+    -webkit-transform: rotate(15deg);
+            transform: rotate(15deg);
+  }
+  8%, 24% {
+    -webkit-transform: rotate(-18deg);
+            transform: rotate(-18deg);
+  }
+  12%, 28% {
+    -webkit-transform: rotate(18deg);
+            transform: rotate(18deg);
+  }
+  16% {
+    -webkit-transform: rotate(-22deg);
+            transform: rotate(-22deg);
+  }
+  20% {
+    -webkit-transform: rotate(22deg);
+            transform: rotate(22deg);
+  }
+  32% {
+    -webkit-transform: rotate(-12deg);
+            transform: rotate(-12deg);
+  }
+  36% {
+    -webkit-transform: rotate(12deg);
+            transform: rotate(12deg);
+  }
+  40%, 100% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+}
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+.fa-rotate-90 {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.fa-rotate-180 {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.fa-rotate-270 {
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+}
+
+.fa-flip-horizontal {
+  -webkit-transform: scale(-1, 1);
+          transform: scale(-1, 1);
+}
+
+.fa-flip-vertical {
+  -webkit-transform: scale(1, -1);
+          transform: scale(1, -1);
+}
+
+.fa-flip-both,
+.fa-flip-horizontal.fa-flip-vertical {
+  -webkit-transform: scale(-1, -1);
+          transform: scale(-1, -1);
+}
+
+.fa-rotate-by {
+  -webkit-transform: rotate(var(--fa-rotate-angle, none));
+          transform: rotate(var(--fa-rotate-angle, none));
+}
+
+.fa-stack {
+  display: inline-block;
+  vertical-align: middle;
+  height: 2em;
+  position: relative;
+  width: 2.5em;
+}
+
+.fa-stack-1x,
+.fa-stack-2x {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: var(--fa-stack-z-index, auto);
+}
+
+.svg-inline--fa.fa-stack-1x {
+  height: 1em;
+  width: 1.25em;
+}
+.svg-inline--fa.fa-stack-2x {
+  height: 2em;
+  width: 2.5em;
+}
+
+.fa-inverse {
+  color: var(--fa-inverse, #fff);
+}
+
+.sr-only,
+.fa-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only-focusable:not(:focus),
+.fa-sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.svg-inline--fa .fa-primary {
+  fill: var(--fa-primary-color, currentColor);
+  opacity: var(--fa-primary-opacity, 1);
+}
+
+.svg-inline--fa .fa-secondary {
+  fill: var(--fa-secondary-color, currentColor);
+  opacity: var(--fa-secondary-opacity, 0.4);
+}
+
+.svg-inline--fa.fa-swap-opacity .fa-primary {
+  opacity: var(--fa-secondary-opacity, 0.4);
+}
+
+.svg-inline--fa.fa-swap-opacity .fa-secondary {
+  opacity: var(--fa-primary-opacity, 1);
+}
+
+.svg-inline--fa mask .fa-primary,
+.svg-inline--fa mask .fa-secondary {
+  fill: black;
+}
+
+.fad.fa-inverse,
+.fa-duotone.fa-inverse {
+  color: var(--fa-inverse, #fff);
+}</style><link rel="apple-touch-icon" sizes="180x180" href="https://dbis-uibk.github.io/relax/assets/favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="https://dbis-uibk.github.io/relax/assets/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="https://dbis-uibk.github.io/relax/assets/favicon/favicon-16x16.png">
+	<link rel="manifest" href="https://dbis-uibk.github.io/relax/assets/favicon/site.webmanifest">
+	<link rel="mask-icon" href="https://dbis-uibk.github.io/relax/assets/favicon/safari-pinned-tab.svg" color="#007bff">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
+    
+	<script type="text/javascript" async="" src="./RelaX - relational algebra calculator_files/js"></script><script async="" src="./RelaX - relational algebra calculator_files/analytics.js"></script><script>
+		(function (i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function () {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o),
+				m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', 'UA-53545936-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+	<!-- Start Single Page Apps for GitHub Pages -->
+	<script type="text/javascript">
+		// Single Page Apps for GitHub Pages
+		// https://github.com/rafrex/spa-github-pages
+		// Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
+		// ----------------------------------------------------------------------
+		// This script checks to see if a redirect is present in the query string
+		// and converts it back into the correct url and adds it to the
+		// browser's history using window.history.replaceState(...),
+		// which won't cause the browser to attempt to load the new url.
+		// When the single page app is loaded further down in this file,
+		// the correct url will be waiting in the browser's history for
+		// the single page app to route accordingly.
+		(function (l) {
+			if (l.search) {
+				var q = {};
+				l.search.slice(1).split('&').forEach(function (v) {
+					var a = v.split('=');
+					q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
+				});
+				if (q.p !== undefined) {
+					window.history.replaceState(null, null,
+						l.pathname.slice(0, -1) + (q.p || '') +
+						(q.q ? ('?' + q.q) : '') +
+						l.hash
+					);
+				}
+			}
+		}(window.location))
+	</script>
+	<!-- End Single Page Apps for GitHub Pages -->
+	<style>
+		.center {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.spinnerInit {
+			background-color: #333;
+			width: 64px;
+			height: 64px;
+			border-radius: 100%;
+			-webkit-animation: sk-scaleout-init 1.0s infinite ease-in-out;
+			animation: sk-scaleout-init 1.0s infinite ease-in-out;
+		}
+
+		@-webkit-keyframes sk-scaleout-init {
+			0% {
+				-webkit-transform: scale(0)
+			}
+
+			100% {
+				-webkit-transform: scale(1.0);
+				opacity: 0;
+			}
+		}
+
+		@keyframes sk-scaleout-init {
+			0% {
+				-webkit-transform: scale(0);
+				transform: scale(0);
+			}
+
+			100% {
+				-webkit-transform: scale(1.0);
+				transform: scale(1.0);
+				opacity: 0;
+			}
+		}
+	</style>
+<link href="./RelaX - relational algebra calculator_files/calc.56237b6b93a1f200ea3c.css" rel="stylesheet"></head>
+
+<body>
+	
+	<div id="root"><div class="view-max"><nav class="desktopNavbar navbar navbar-expand-md navbar-light bg-light"><a href="https://dbis-uibk.github.io/relax/" class="navbar-brand">RelaX</a><ul class="ml-auto navbar-nav"><li class="navItemSpace nav-item"><a href="https://dbis-uibk.github.io/relax/calc" class="nav-link"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="calculator" class="svg-inline--fa fa-calculator " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M400 0H48C22.4 0 0 22.4 0 48v416c0 25.6 22.4 48 48 48h352c25.6 0 48-22.4 48-48V48c0-25.6-22.4-48-48-48zM128 435.2c0 6.4-6.4 12.8-12.8 12.8H76.8c-6.4 0-12.8-6.4-12.8-12.8v-38.4c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4zm0-128c0 6.4-6.4 12.8-12.8 12.8H76.8c-6.4 0-12.8-6.4-12.8-12.8v-38.4c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4zm128 128c0 6.4-6.4 12.8-12.8 12.8h-38.4c-6.4 0-12.8-6.4-12.8-12.8v-38.4c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4zm0-128c0 6.4-6.4 12.8-12.8 12.8h-38.4c-6.4 0-12.8-6.4-12.8-12.8v-38.4c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4zm128 128c0 6.4-6.4 12.8-12.8 12.8h-38.4c-6.4 0-12.8-6.4-12.8-12.8V268.8c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v166.4zm0-256c0 6.4-6.4 12.8-12.8 12.8H76.8c-6.4 0-12.8-6.4-12.8-12.8V76.8C64 70.4 70.4 64 76.8 64h294.4c6.4 0 12.8 6.4 12.8 12.8v102.4z"></path></svg> Calculator</a></li><li class="navItemSpace dropdown nav-item"><a aria-haspopup="true" href="https://dbis-uibk.github.io/relax/help#" class="dropdown-toggle nav-link" aria-expanded="false"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="globe-europe" class="svg-inline--fa fa-globe-europe " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm200 248c0 22.5-3.9 44.2-10.8 64.4h-20.3c-4.3 0-8.4-1.7-11.4-4.8l-32-32.6c-4.5-4.6-4.5-12.1.1-16.7l12.5-12.5v-8.7c0-3-1.2-5.9-3.3-8l-9.4-9.4c-2.1-2.1-5-3.3-8-3.3h-16c-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8l9.4-9.4c2.1-2.1 5-3.3 8-3.3h32c6.2 0 11.3-5.1 11.3-11.3v-9.4c0-6.2-5.1-11.3-11.3-11.3h-36.7c-8.8 0-16 7.2-16 16v4.5c0 6.9-4.4 13-10.9 15.2l-31.6 10.5c-3.3 1.1-5.5 4.1-5.5 7.6v2.2c0 4.4-3.6 8-8 8h-16c-4.4 0-8-3.6-8-8s-3.6-8-8-8H247c-3 0-5.8 1.7-7.2 4.4l-9.4 18.7c-2.7 5.4-8.2 8.8-14.3 8.8H194c-8.8 0-16-7.2-16-16V199c0-4.2 1.7-8.3 4.7-11.3l20.1-20.1c4.6-4.6 7.2-10.9 7.2-17.5 0-3.4 2.2-6.5 5.5-7.6l40-13.3c1.7-.6 3.2-1.5 4.4-2.7l26.8-26.8c2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3H258l-16 16v8c0 4.4-3.6 8-8 8h-16c-4.4 0-8-3.6-8-8v-20c0-2.5 1.2-4.9 3.2-6.4l28.9-21.7c1.9-.1 3.8-.3 5.7-.3C358.3 56 448 145.7 448 256zM130.1 149.1c0-3 1.2-5.9 3.3-8l25.4-25.4c2.1-2.1 5-3.3 8-3.3 6.2 0 11.3 5.1 11.3 11.3v16c0 3-1.2 5.9-3.3 8l-9.4 9.4c-2.1 2.1-5 3.3-8 3.3h-16c-6.2 0-11.3-5.1-11.3-11.3zm128 306.4v-7.1c0-8.8-7.2-16-16-16h-20.2c-10.8 0-26.7-5.3-35.4-11.8l-22.2-16.7c-11.5-8.6-18.2-22.1-18.2-36.4v-23.9c0-16 8.4-30.8 22.1-39l42.9-25.7c7.1-4.2 15.2-6.5 23.4-6.5h31.2c10.9 0 21.4 3.9 29.6 10.9l43.2 37.1h18.3c8.5 0 16.6 3.4 22.6 9.4l17.3 17.3c3.4 3.4 8.1 5.3 12.9 5.3H423c-32.4 58.9-93.8 99.5-164.9 103.1z"></path></svg> <span>Language</span></a><div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right"><button type="button" tabindex="0" role="menuitem" class="dropdown-item">en</button><button type="button" tabindex="0" role="menuitem" class="dropdown-item">de</button><button type="button" tabindex="0" role="menuitem" class="dropdown-item">es</button><button type="button" tabindex="0" role="menuitem" class="dropdown-item">kr</button><button type="button" tabindex="0" role="menuitem" class="dropdown-item">pt</button></div></li><li class="navItemSpace nav-item"><a href="https://github.com/dbis-uibk/relax/issues" class="nav-link"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="comment" class="svg-inline--fa fa-comment " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5c-2.2 2.3-2.8 5.7-1.5 8.7S4.8 480 8 480c66.3 0 116-31.8 140.6-51.4 32.7 12.3 69 19.4 107.4 19.4 141.4 0 256-93.1 256-208S397.4 32 256 32z"></path></svg> <span>Feedback</span></a></li><li class="navItemSpace nav-item"><a href="https://dbis-uibk.github.io/relax/help" class="nav-link"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="question-circle" class="svg-inline--fa fa-question-circle " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"></path></svg> <span>Help</span></a></li><li class="navItemSpace nav-item"><a href="https://dbis-uibk.github.io/relax/imprint" class="nav-link"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="address-card" class="svg-inline--fa fa-address-card " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-352 96c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H86.4C74 384 64 375.4 64 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2zM512 312c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-64c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-64c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16z"></path></svg> <span>Imprint</span></a></li><li class="navItemSpace nav-item"><div class="theme-mode-wrapper"><button class="theme-mode-toggle"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" class="svg-inline--fa fa-moon " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"></path></svg></button></div></li></ul></nav><nav class="mobileNavbar navbar navbar-expand-md navbar-light bg-light"><div class="dropdown"><a aria-haspopup="true" href="https://dbis-uibk.github.io/relax/help#" class="nav-link" aria-expanded="false"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg></a><div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu"><a href="https://dbis-uibk.github.io/relax/calc" tabindex="0" role="menuitem" class="dropdown-item"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="calculator" class="svg-inline--fa fa-calculator " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M400 0H48C22.4 0 0 22.4 0 48v416c0 25.6 22.4 48 48 48h352c25.6 0 48-22.4 48-48V48c0-25.6-22.4-48-48-48zM128 435.2c0 6.4-6.4 12.8-12.8 12.8H76.8c-6.4 0-12.8-6.4-12.8-12.8v-38.4c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4zm0-128c0 6.4-6.4 12.8-12.8 12.8H76.8c-6.4 0-12.8-6.4-12.8-12.8v-38.4c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4zm128 128c0 6.4-6.4 12.8-12.8 12.8h-38.4c-6.4 0-12.8-6.4-12.8-12.8v-38.4c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4zm0-128c0 6.4-6.4 12.8-12.8 12.8h-38.4c-6.4 0-12.8-6.4-12.8-12.8v-38.4c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4zm128 128c0 6.4-6.4 12.8-12.8 12.8h-38.4c-6.4 0-12.8-6.4-12.8-12.8V268.8c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v166.4zm0-256c0 6.4-6.4 12.8-12.8 12.8H76.8c-6.4 0-12.8-6.4-12.8-12.8V76.8C64 70.4 70.4 64 76.8 64h294.4c6.4 0 12.8 6.4 12.8 12.8v102.4z"></path></svg> <span>Calculate</span></a><a href="https://dbis-uibk.github.io/relax/help" tabindex="0" role="menuitem" class="dropdown-item"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="comment" class="svg-inline--fa fa-comment " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5c-2.2 2.3-2.8 5.7-1.5 8.7S4.8 480 8 480c66.3 0 116-31.8 140.6-51.4 32.7 12.3 69 19.4 107.4 19.4 141.4 0 256-93.1 256-208S397.4 32 256 32z"></path></svg> <span>Help</span></a><a href="https://dbis-uibk.github.io/relax/imprint" tabindex="0" role="menuitem" class="dropdown-item"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="address-card" class="svg-inline--fa fa-address-card " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-352 96c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H86.4C74 384 64 375.4 64 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2zM512 312c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-64c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-64c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16z"></path></svg> <span>Imprint</span></a><a href="https://github.com/dbis-uibk/relax/issues" tabindex="0" role="menuitem" class="dropdown-item"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="question-circle" class="svg-inline--fa fa-question-circle " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"></path></svg> <span>Feedback</span></a><div tabindex="-1" class="dropdown-divider"></div><button type="button" tabindex="0" role="menuitem" class="dropdown-item">en</button><button type="button" tabindex="0" role="menuitem" class="dropdown-item">de</button><button type="button" tabindex="0" role="menuitem" class="dropdown-item">es</button><button type="button" tabindex="0" role="menuitem" class="dropdown-item">kr</button></div></div><a href="https://dbis-uibk.github.io/" class="navbar-brand">RelaX</a></nav><div class="view-content"><div class="container"><h1 id="help">RelaX - Help <a class="anchor" href="https://dbis-uibk.github.io/relax/help#help"><i class="fa fa-link"></i></a></h1><div id="toc"><h6><a href="https://dbis-uibk.github.io/relax/help#tutorial-user">Tutorial - user</a></h6><ul><li><a href="https://dbis-uibk.github.io/relax/help#tutorial-user-coreconcepts">The core concepts</a><ul><li><a href="https://dbis-uibk.github.io/relax/help#tutorial-user-relations">relations</a><ul></ul></li></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#tutorial-user-plain-text-notation">Alternative plain text notation</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#tutorial-user-relalg">Relational algebra</a><ul><li><a href="https://dbis-uibk.github.io/relax/help#tocId0">Open and inspect dataset</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#tutorial-user-basic-query">The most basic query</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#tutorial-user-unary-operations">Unary operations</a><ul></ul></li></ul></li></ul><h6><a href="https://dbis-uibk.github.io/relax/help#tutorial-maintainer">Tutorial - maintainer</a></h6><ul><li><a href="https://dbis-uibk.github.io/relax/help#tutorial-maintainer-create-dataset">Creating a dataset</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#tutorial-maintainer-share-dataset">Share a dataset</a><ul></ul></li></ul><h6><a href="https://dbis-uibk.github.io/relax/help#relalg-reference">Reference - relational algebra</a></h6><ul><li><a href="https://dbis-uibk.github.io/relax/help#relalg-syntax">General syntax</a><ul><li><a href="https://dbis-uibk.github.io/relax/help#relalg-assignment">assignment</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-comment-sl">single-line comment</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-relation-name">pre defined relation</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-comment-ml">multi-line comment</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-inline-relation">inline-relation</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-relalgexpr">relational algebra expression</a><ul></ul></li></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-unary-operations">Unary operations</a><ul><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-projection">projection</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-selection">selection</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-renamerelation">rename relation</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-renamecolumn">rename column</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-orderby">order by</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-groupby">group by</a><ul></ul></li></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-binary-operations">Binary operations</a><ul><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-intersection">intersection - ∩</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-union">union - ∪</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-division">division</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-subtraction">subtraction / set-difference</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-crossjoin">cross product</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-innerjoin">Theta-join / θ-join</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-naturaljoin">natural join</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-leftjoin">left outer join</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-rightjoin">right outer join</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-fulljoin">full outer join</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-leftsemijoin">left semi join</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-rightsemijoin">right semi join</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-antijoin">anti semi join</a><ul></ul></li></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-operator-precedence">Operator precedence</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-misc">Misc</a><ul><li><a href="https://dbis-uibk.github.io/relax/help#relalg-column">Column</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#relalg-valueexpr">Value expressions</a><ul></ul></li></ul></li></ul><h6><a href="https://dbis-uibk.github.io/relax/help#sql-reference">Reference - SQL</a></h6><ul><li><a href="https://dbis-uibk.github.io/relax/help#sql-syntax">General syntax</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#sql-translation">Semantic and Translation to relational algebra</a><ul><li><a href="https://dbis-uibk.github.io/relax/help#sql-translation-sequence">Sequence of execution</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#sql-select">SELECT</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#sql-from">FROM</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#sql-where">WHERE</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#sql-groupby">GROUP BY</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#sql-having">HAVING</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#sql-orderby">ORDER BY</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#sql-limit">LIMIT</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#sql-setoperators">UNION / INTERSECT / EXCEPT</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#sql-with">WITH</a><ul></ul></li><li><a href="https://dbis-uibk.github.io/relax/help#sql-valueexpr">Value expressions</a><ul></ul></li></ul></li></ul><h6><a href="https://dbis-uibk.github.io/relax/help#license-help">Licence</a></h6><ul></ul></div><h2 id="tutorial-user" name="tutorial-user">Tutorial - user <a class="anchor" href="https://dbis-uibk.github.io/relax/help#tutorial-user"><i class="fa fa-link"></i></a></h2><h3 id="tutorial-user-coreconcepts" name="tutorial-user-coreconcepts">The core concepts <a class="anchor" href="https://dbis-uibk.github.io/relax/help#tutorial-user-coreconcepts"><i class="fa fa-link"></i></a></h3><p>The goal of this tutorial is to give a quick introduction how to use the relational algebra calculator and its concepts. It assumes that you already know the relational algebra or are learning it from other sources.</p><p>There is no real standard for the relational algebra like there is for SQL. So every book or teacher might have its slightly different interpretation and notation.<br>The goal of this progam was to support the most commonly used "mathematical" notation used by <a href="http://infolab.stanford.edu/~ullman/dscb.html">Database Systems The Complete Book 2nd Edition by Hector Garcia-Molina, Jeff Ullman, and Jennifer Widom</a>, <a href="http://www3.in.tum.de/teaching/bookDBMSeinf/" lang="de">Datenbanksysteme: Eine Einführung by Alfons Kemper and André Eickler</a> and <a href="http://en.wikipedia.org/wiki/Relational_algebra">Wikipedia - Relational Algebra</a> and others.</p><h4 id="tutorial-user-relations" name="tutorial-user-relations">relations <a class="anchor" href="https://dbis-uibk.github.io/relax/help#tutorial-user-relations"><i class="fa fa-link"></i></a></h4><p>The core element of the calculator is the relation (or table) which consists of a fixed number of attributes (or columns) in a fixed order (this is called the schema of the relation) and a set of tuples or rows containing the specific values.</p><p>Each attribute has three distinct properties: its type, its position and its name.</p><p>The type or domain of an attribute is either <i>string</i>, <i>number</i>, <i>date</i> or <i>boolean</i>.<br>The type is used for example to determine if two values can be compared in a boolean expression or if two schemas are union compatible. In most cases the type of the attributes are obvious if you look at the values.</p><p>The position of each attribute in a schema is fixed and can be used to adress the attributes.<br>An example would be the projection of the first and third attribute or column of an arbitrary relation R: <code class="example block">π [1], [3] ( R )</code></p><p>The full qualified name of the attribute is a unique identifier of the attribute within the schema of its relation. It consists of the name itself and a relation qualifier and are written like in SQL as <code>R.a</code>where a is the name and R is the relation qualifier.<br>An example would be the projectoin of the attributes a, b from a relation R: <code class="example block">π R.a, R.b ( R )</code><br>The default relation qualifier of each attribute is the name of its relation.<br>If the attributes name without the qualifier is unique within the relation's schema, it also can be used to address a specific attribute.<br>The previous example could also be written as <code>π a, b ( R )</code>.</p><p>Each relation has a set of tuples (or rows). This means that there are no duplicate tuples within one relation and the duplicate-elimination is implicitly executed after every single step of the calculation.<br>The tuples in the calculator have a defined order and unlike a normal database system all operations are implemented to preserve that order. This should help the users to see what has changed from one step to the next.</p><p>so far we covered that</p><ul><li>relations are the core elements,</li><li>relations have a schema and a set of tuples,</li><li>each attribute in the schema has<ul><li>data-type</li><li>a position</li><li>a fully qualified name (RELATION.attributename)</li></ul></li><li>and that each attribute can be addressed within an operation using<ul><li>its position e.g. <code class="">π [1], [2] ( R )</code>,</li><li>the attribute name e.g. <code class="">π a, b ( R )</code></li><li>or its full quallified name if the unqualified is not unique e.g. <code class="">π R.a, S.a ( R x S )</code></li></ul></li></ul><h3 id="tutorial-user-plain-text-notation" name="tutorial-user-plain-text-notation">Alternative plain text notation <a class="anchor" href="https://dbis-uibk.github.io/relax/help#tutorial-user-plain-text-notation"><i class="fa fa-link"></i></a></h3><p>Before we introduce how to use the operators this should be a quick introduction of a very handy feature of the relational algebra calculator: the alternative plain text notation</p><p>The "classNameic" mathematical notation uses greek letters like π, σ for the unary operations and special symbols like the join symbol <span class="math">⋈</span> or the union symbol <span class="math">∪</span>for some binary operations.<br>This symbols can be entered using the toolbar at the top of the editor.</p><p>This calculator also supports a alternative syntax for all this symbols that follows two very simple rules: Every greek letter can be substituted with its name spelled out ("pi" for π, "gamma" for γ) and every other symbol has an equivalent name that is borrowed from SQL, programming languages like C and <a href="http://en.wikipedia.org/wiki/Set_theory">Set theory</a>.</p><p>This substitutions should be easy to read and much more important very easy to write because you don't need any toolbar or mouse. The calculator also supports autocomplete: just press [CTRL]+[SPACE] to complete the current keyword.<br>This feature should help you to write your statements more quickly and fluently.</p><code class="example block">π R.a, S.a, S.b σ R.a = S.a ∧ ( R.a &gt; 5 ∨ R.a &lt; 0 ) ( R ⨯ S )</code>is equivalent to:<code class="example block">pi R.a, S.a, S.b sigma R.a = S.a and ( R.a &gt; 5 or R.a &lt; 0 ) ( R cross join S )</code>In the following table you can see a list of all supported substitutions:<div class="scroll-x"><table class="table table-condensed"><thead><tr><th>classNameical notation</th><th>alternative notation</th></tr></thead><tbody><tr><td class="math">π</td><td>pi</td></tr><tr><td class="math">σ</td><td>sigma</td></tr><tr><td class="math">ρ</td><td>rho</td></tr><tr><td class="math">τ</td><td>tau</td></tr><tr><td class="math">γ</td><td>gamma</td></tr><tr><td class="math">∩</td><td>intersect</td></tr><tr><td class="math">∪</td><td>union</td></tr><tr><td class="math">-</td><td>\</td></tr><tr><td class="math">÷</td><td>/</td></tr><tr><td class="math">⨯</td><td><ul><li>x</li><li>cross join</li></ul></td></tr><tr><td class="math">⋈</td><td><ul><li>join</li><li>inner join</li><li>natural join</li></ul></td></tr><tr><td class="math">⟕</td><td><ul><li>left join</li><li>left outer join</li></ul></td></tr><tr><td class="math">⟖</td><td><ul><li>right join</li><li>right outer join</li></ul></td></tr><tr><td class="math">⟗</td><td>full outer join</td></tr><tr><td class="math">⋉</td><td>left semi join</td></tr><tr><td class="math">⋊</td><td>right semi join</td></tr><tr><td class="math">▷</td><td><ul><li>anti semi join</li><li>anti join</li></ul></td></tr><tr><td class="math">←</td><td>&lt;-<code class="example block">pi new_name &lt;- a ( R )</code></td></tr><tr><td class="math">→</td><td>-&gt;<code class="example block">pi a -&gt; new_name ( R )</code></td></tr></tbody></table></div><ul><li>schema preserving operations - operations where the resulting relation has the same schema as its first argument-relation:<ul><li>selection</li><li>union</li><li>intersection</li><li>subtraction</li><li>orderby</li><li>left outer join</li><li>left semi join</li><li>anti join</li></ul></li></ul><h3 id="tutorial-user-relalg" name="tutorial-user-relalg">Relational algebra <a class="anchor" href="https://dbis-uibk.github.io/relax/help#tutorial-user-relalg"><i class="fa fa-link"></i></a></h3><p>For this Part we use the <a href="https://dbis-uibk.github.io/relax/calc/gist/2cfb981fbc5676182d64">"bank example" Dataset</a> with 3 relations: <i>Customers</i>, <i>Accounts</i> and <i>PremiumCustomers</i>. By convention relations start with a uppercase letter and attributes with a lower case letter.</p><h4 name="tocId0" id="tocId0">Open and inspect dataset <a class="anchor" href="https://dbis-uibk.github.io/relax/help#tocId0"><i class="fa fa-link"></i></a></h4><p>Open the dataset used in this tutorial using the following link to the <a href="https://dbis-uibk.github.io/relax/calc/gist/2cfb981fbc5676182d64">"bank example" Dataset</a>.</p><p>You find the relations and their attributes listed on the side and if you hover a relations name a preview of the first view tuples is displayed.</p><h4 id="tutorial-user-basic-query" name="tutorial-user-basic-query">The most basic query <a class="anchor" href="https://dbis-uibk.github.io/relax/help#tutorial-user-basic-query"><i class="fa fa-link"></i></a></h4><p>After you have found the Dataset you can formulate the very first and most basic query in relational algebra: a relation without any further manipulation.</p><p>Just enter the name of a relation into the code editor or click on the relation/attribute names to insert them into the code editor.<br>Note that the editor supports auto completing the relation/attribute names of the current dataset and the operators with [CTRL]+[SPACE]</p><p>So if you want all tuples of the relation <i>Customer</i> you should have the following statement: <code>Customer</code>. And get all the tuples if you press the execute button or press [CTRL]+[RETURN].</p><h4 id="tutorial-user-unary-operations" name="tutorial-user-unary-operations">Unary operations <a class="anchor" href="https://dbis-uibk.github.io/relax/help#tutorial-user-unary-operations"><i class="fa fa-link"></i></a></h4><p>All unary operations have the same basic syntax <code><i>FUNCTION</i> ARGUMENT <strong>(</strong>CHILD_EXPRESSION <strong>)</strong></code>.</p><p class="hint">The braces around the <code>CHILD_EXPRESSION</code> can be omitted. In this case the predefined <a href="https://dbis-uibk.github.io/relax/help#relalg-operator-precedence">operator precedence for relational algebra</a> applies.</p><p>A complete list of the supported relalg operations can be found here: <a href="https://dbis-uibk.github.io/relax/help#relalg-syntax">general syntax</a>, <a href="https://dbis-uibk.github.io/relax/help#relalg-unary-operations">unary operations</a> and <a href="https://dbis-uibk.github.io/relax/help#relalg-binary-operations">binary operations</a>.</p><p>The projection is one of the basic operations that allow to choose which of the attributes of the parent relations should be included in the new one and in which order they should be.</p><p>Renaming a relation (ρ) changes the qualifiers of all the relations attributes but does not touch the tuples.</p><p>Renaming an attribute (ρ) only changes the name of a specific attribute (and leaves his relation-qualifier unchanged).</p><p>The statement <code>pi balance ( Accounts )</code> returns a new relation with only the balance attribute.</p><p>The next statement gets the balance with the account-id after renaming the relation to <i>A</i> and renames one of the attributes.</p><code class="example block">rho account_number &lt;- aid ( pi aid, A.balance ( rho A ( Accounts ) ) )</code><p class="hint">Like in SQL or most programming languages you can format your statement and use SQL like comments (with <code>-- ...</code> or <code>/* ... */</code>) to increase the readability.</p><p>The next statement uses a selection to filter the tuples of a relation based on a boolean expression. The calculator supports complex boolean expression with functions and built in operator precedence.<br>The attributes in the boolean expression can be given as name or numeric position like with the projection.</p><p>The next statement selects all customers-ids of customers who have the same value for their firstname and lastname.</p><code class="example block">-- this should return an relation with no tuples: pi cid ( sigma firstname=lastname ( Customers ) )</code><p>The next example uses a more complex expression to get all accounts with a balance over 100 or under -100.</p><code class="example block">sigma balance &gt; 100 or (balance*-1 &gt; 100) ( Accounts ) -- (balance &lt; -100) would also be correct</code><p>As a shorter alternative you can use a <a href="https://dbis-uibk.github.io/relax/help#relalg-valueexpr">function in your expression</a> to get the same result:</p><code class="example block">sigma abs(balance) &gt; 100 ( Accounts )</code><h2 id="tutorial-maintainer" name="tutorial-maintainer">Tutorial - maintainer <a class="anchor" href="https://dbis-uibk.github.io/relax/help#tutorial-maintainer"><i class="fa fa-link"></i></a></h2><p>Everybody can provide datasets that can be used in the relational algebra calculator and share them with others.<br>We assume the scenario of a teacher wanting to provide a dataset for his/her students for this short tutorial.</p><p>The datasets are specified in a simple text format and can be shared with others via <a href="https://gist.github.com/">GitHub Gists</a> (a simple and free platform to share snippets).<br>The shared gist gets an unique ID and the relational algebra calculator can load the dataset directly using this ID.</p><h3 id="tutorial-maintainer-create-dataset" name="tutorial-maintainer-create-dataset">Creating a dataset <a class="anchor" href="https://dbis-uibk.github.io/relax/help#tutorial-maintainer-create-dataset"><i class="fa fa-link"></i></a></h3><p>The fist step is the creation of the dataset which is actually only a group of relation definitions with some additional information and is therefore refered as group in the specified format.<br>The relations can then be used by the students to formulate the there statements.<br>Lets assume we want to create a dataset of employees of a company.</p>Every group definition starts with a simple header which (at least) contains the name of the group:<code class="example block">group: bank example</code>every header field starts with the name of the field and is followed by a colon for single line values. The next (optional) header field we should specify is the description. It should contain information like who is maintaining this dataset or where to find additional information.<br>In the description <a href="http://en.wikipedia.org/wiki/Markdown">Markdown</a> can be used to format the text or set links to external resources.<p>In our example we add a description that takes more than a single line and therefore we enclose the value in double brackets instead of using the colon.</p><code class="example block">group: bank example description[[ the data for this dataset was generated using &lt;http://www.generatedata.com/&gt;* the relation _Customers_ contains basic information about the customers of the bank. The relation _Accounts_ contains the basic information of a single account. Note that a customer can have any number of accounts. * the relation _PremiumCustomers_ contains the customer-ids of all customers with a total balance over 1000 ]]</code><p>The next step is to actually add the relations the students can use for their queries.<br>The relation definitions are use the relational algebra syntax that can be used in this tool.<br>Every relation is defined by a single variable assignment where the name of the variable is used as the relations name and the result of the expression defines the relation.<br>The relalg expression can use all features that can be used in the tool and can also use other relations defined within the same dataset.<br>Note that the name of the relation is used as the qualifier of each attribute/column.</p><p>For the relation <code>Customers</code> relation we use the <a href="https://dbis-uibk.github.io/relax/help#relalg-inline-relation">inline relation</a> syntax as the most basic method to define the relation and can also be edited using the relation editor <i class="fa fa-table" title="relation editor"></i> which is a simple spread-sheet like editor. <br>The inline relations in combination with the editor should be very easy to use if you enter the data directly or if you have them as a csv/spread-sheet file.</p><code class="example block">group: bank example
+				description[[ the data for this dataset was generated using {'&lt;'}http://www.generatedata.com/&gt;
+
+				* the relation _Customers_ contains basic information about the customers of the bank.
+				* the relation _Accounts_ contains the basic information of a single account. Note that a customer can
+				have any number of accounts.
+				* the relation _PremiumCustomers_ contains the customer-ids of all customers with a total balance over
+				1000
+				]]
+
+				Customers = { cid firstname lastname
+				1 Dexter Simpson
+				2 Kaseem Gallagher
+				3 Kuame Hamilton
+				4 Robert Thompson
+				5 Rhiannon Valentine
+				6 Calvin Mays
+				}
+
+				Accounts = {
+				aid, cid, balance:number
+				1, 1, 66
+				2, 1, -304
+				3, 2, 272
+				4, 3, 3472
+				5, 4, 975.7
+				6, 4, 93
+				7, 5, 534
+				8, 5, -75.5
+				}
+				</code><p>As we can see the name of the relations are defined by the assignments.<br>The inline-relations are enclosed by curly braces and contain the names of the attributes/columns in the first line and then a tuple/row per line where the values are simply separated by whitespace. You can also other seperators and can define the types explicitly as we can see at the Accounts relation. For further information can be found at <a href="https://dbis-uibk.github.io/relax/help#relalg-inline-relation">inline relation description</a>.</p><p>Note that, unlike the variables used in a query, the definition of a new relation implicitly sets the attribute qualifier to the name of the relation. So the schema of the account relation is <code>(Accounts.aid, Accounts.cid, Accounts.balance)</code>. This allows each attribute to be accessible with this name.</p><p>The last relation we need to add in this example is the relation containing the banks premium Customers.<br>They are specified by using the other two relations in a simple relational algebra statement that selects all customers with a total balance over 1000.</p><code class="example block">group: bank example
+				description[[ the data for this dataset was generated using {'&lt;'}http://www.generatedata.com/&gt;
+
+				* the relation _Customers_ contains basic information about the customers of the bank.
+				* the relation _Accounts_ contains the basic information of a single account. Note that a customer can
+				have any number of accounts.
+				* the relation _PremiumCustomers_ contains the customer-ids of all customers with a total balance over
+				1000
+				]]
+
+				Customers = { cid firstname lastname
+				1 Dexter Simpson
+				2 Kaseem Gallagher
+				3 Kuame Hamilton
+				4 Robert Thompson
+				5 Rhiannon Valentine
+				6 Calvin Mays
+				}
+
+				Accounts = {
+				aid, cid, balance:number
+				1, 1, 66
+				2, 1, -304
+				3, 2, 272
+				4, 3, 3472
+				5, 4, 975.7
+				6, 4, 93
+				7, 5, 534
+				8, 5, -75.5
+				}
+
+				PremiumCustomers =
+					pi cid (
+						sigma sum &gt; 1000 (
+							gamma cid; sum(balance)-&gt;sum (
+								Accounts
+								join Customers
+							)
+						)
+					)
+				</code><p>We have now seen how to define a dataset with its header containing the name and the description followed by relational algebra assignments defining the relations of the dataset.</p><p>We can paste this definition directly in the <i>Group Editor</i> to load and use it.<br>In the next section we want to look at how we can publish this definition so that we give our students a single url or id to directly load the dataset.</p><h3 id="tutorial-maintainer-share-dataset" name="tutorial-maintainer-share-dataset">Share a dataset <a class="anchor" href="https://dbis-uibk.github.io/relax/help#tutorial-maintainer-share-dataset"><i class="fa fa-link"></i></a></h3><p>If we want to share the definition of a dataset with other people we could simply give them the definition and they load it using the <i>group editor</i>, but that would not be that practical for most cases.</p><p>The simpler solution (for the users) is to publish the definition as a <a href="https://gist.github.com/">GitHub Gist</a> and share the ID of the gist with others.</p><p>Just create a gist with the definition as its content (the filename does not matter) and publish it. The ID of the Gist can now be found at the top of the page as <i>gist:xxxxxxxxxxxx</i> or in the url after the last slash.</p><p>This ID can then be shared and loaded in the interface or the calculator can be called directly with a specific ID by using using the parameter <code>/calc/gist/xxxxxxxxxxxx</code>.</p><p>For example the simple bank definition of this tutorial has been published as a <a href="https://gist.github.com/ragtime/2cfb981fbc5676182d64">Gist with the ID 2cfb981fbc5676182d64</a> and can therefore be loaded directly with modifying the url by replacing all after <code>DOMAIN/relax/calc/</code> with <code>/gist/2cfb981fbc5676182d64</code>.</p><h2 id="relalg-reference" name="relalg-reference">Reference - relational algebra <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-reference"><i class="fa fa-link"></i></a></h2><h3 id="relalg-syntax" name="relalg-syntax">General syntax <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-syntax"><i class="fa fa-link"></i></a></h3><div><h4 id="relalg-assignment" name="relalg-assignment">assignment <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-assignment"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>syntax</th><td><code><i>NAME</i> <strong>=</strong> <i>EXPRESSION</i></code></td></tr></tbody></table></div><div><p>Defines a new local variable with the name <i>NAME</i>; its content is defined by<i>EXPRESSION</i></p><p>The name of the new relation must be unique.</p><p>The definition has to be executed with the statement.</p><div class="example"><code>TestA = π a,b R TestB = σ d &gt; 0 S -- statement using the variable TestA join TestB</code></div><p>An assignment (= definition of a variable) is no valid relational algebra expression on its own. If you miss the acutal query a error is thrown (<i>Error: only assignments found; query is missing</i>).</p><div class="example"><code>-- this is the definition of the variable Test = π Customer.firstname, surname ( Customer ) -- this is the actual query/statement using the variable Test</code></div><p>The defined variable can be used like the assigned expression could be used because every usage of the variable gets replaced with its definition before the query gets executed.<br>This also means that the variable-name has no influence on the schema of the expression and the names of the attributes/columns are not affected by assignment:<code class="block example">X = R X join S</code>The attributes of the relation R are only accessible with its original names (R.a, R.b, ..), and are not affected by the assignment.</p><p>There is a known problem when the last assignment ends with a natural join and the query consists of a single relation:</p><code>A = S join R A -- this is the query</code><p>The statement is ambiguous and the parser interprets it as <code>A = (S join R A)</code>where R is interpreted as a column argument for the theta-join and therefore detects a cyclic usage of the variable A.</p><p>Solution: To get the expected behaviour you have to set braces around the assigned expression like <code>A = (S join R) A</code></p></div></div><div><h4 id="relalg-comment-sl" name="relalg-comment-sl">single-line comment <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-comment-sl"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>syntax</th><td><code><strong>-- </strong><i>COMMENT_TEXT</i><i>EXPRESSION</i></code></td></tr></tbody></table></div><div><p>the '--' must be followed by at least one whitespace charater! inserts a comment; its text goes until the end of the line</p><p>comments are recognized as whitespace</p><div class="example"><code>Test =<b>-- This is the expression that is assigned to Test:</b>π Customer.firstname, surname ( Customer )</code></div></div></div><div><h4 id="relalg-relation-name" name="relalg-relation-name">pre defined relation <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-relation-name"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>syntax</th><td><code><i>RELATION_NAME</i></code></td></tr></tbody></table></div><div><p>Uses a pre defined relation with the name <i>RELATION_NAME</i></p><p>The code completion only works for this relations.</p><div class="example"><code>( Customers ) cross join ( Accounts )</code></div></div></div><div><h4 id="relalg-comment-ml" name="relalg-comment-ml">multi-line comment <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-comment-ml"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>syntax</th><td><code><strong>/* </strong><i>COMMENT_TEXT</i><strong> */</strong><i>EXPRESSION</i></code></td></tr></tbody></table></div><div><p>inserts a comment that can span multiple lines</p><p>comments are recognized as whitespace</p><div class="example"><code><b>/* This is a very very long comment */</b>Test = π Customer.firstname, surname ( Customer )</code></div></div></div><div><h4 id="relalg-inline-relation" name="relalg-inline-relation">inline-relation <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-inline-relation"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>syntax</th><td><code><b>{</b><i>COLUMN_NAME_1</i>:<i>COLUMN_TYPE_1</i> ...<i>ROW_1</i><i>ROW_2</i>...<b>}</b></code></td></tr></tbody></table></div><div><p>The inline-relation is a temporary relation that can be defined directly in the statement. It is only valid in the defining statement</p><p>Every inline-relation is a valid expression and thus can be used at any position a<i>EXPRESSION</i> is expected.</p><p>The inline-relation is defined by a header, that specifies the schema of the relation and the rows containing the values and is surrounded by curly braces.</p><div>The header is defined by a sequence of<code><i>QUALIFIER.COLUMN_NAME</i>:<i>COLUMN_TYPE</i></code> <b>separated by any whitespace, comma or semicolon.</b>The <i>QUALIFIER</i> is optional. Also the <i>COLUMN_TYPE</i> can be omitted if the type is well defined by the values of that column. The first non null value of a column defines its type.<br>True and false (case insensitive without quotes) are reserved for a boolean type. They can be used as a simple string but they do not define the type of the column as string.<br>The <i>COLUMN_TYPE</i> can be one of the following<ul><li>string</li><li>number</li><li>date</li><li>boolean</li></ul><div class="too-wide"><div><svg class="railroad-diagram" width="613" height="162" viewBox="0 0 613 162"><g transform="translate(.5 .5)"><path d="M 20 31 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path><g><path d="M40 41h0"></path><path d="M240 41h0"></path><path d="M40 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path><g><path d="M60 21h160"></path></g><path d="M220 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path><path d="M40 41h20"></path><g><path d="M60 41h0"></path><path d="M220 41h0"></path><path d="M60 41h10"></path><g><path d="M70 41h0"></path><path d="M162 41h0"></path><rect x="70" y="30" width="92" height="22"></rect><text x="116" y="45">qualifier</text></g><path d="M162 41h10"></path><path d="M172 41h10"></path><g><path d="M182 41h0"></path><path d="M210 41h0"></path><rect x="182" y="30" width="28" height="22" rx="10" ry="10"></rect><text x="196" y="45">.</text></g><path d="M210 41h10"></path></g><path d="M220 41h20"></path></g><path d="M240 41h10"></path><g><path d="M250 41h0"></path><path d="M358 41h0"></path><rect x="250" y="30" width="108" height="22"></rect><text x="304" y="45">column-name</text></g><path d="M358 41h10"></path><g><path d="M368 41h0"></path><path d="M572 41h0"></path><path d="M368 41a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path><g><path d="M388 21h164"></path></g><path d="M552 21a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path><path d="M368 41h20"></path><g><path d="M388 41h0"></path><path d="M552 41h0"></path><path d="M388 41h10"></path><g><path d="M398 41h0"></path><path d="M426 41h0"></path><rect x="398" y="30" width="28" height="22" rx="10" ry="10"></rect><text x="412" y="45">:</text></g><path d="M426 41h10"></path><g><path d="M436 41h0"></path><path d="M552 41h0"></path><path d="M436 41h20"></path><g><path d="M456 41h4"></path><path d="M528 41h4"></path><rect x="460" y="30" width="68" height="22" rx="10" ry="10"></rect><text x="494" y="45">string</text></g><path d="M532 41h20"></path><path d="M436 41a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M456 71h4"></path><path d="M528 71h4"></path><rect x="460" y="60" width="68" height="22" rx="10" ry="10"></rect><text x="494" y="75">number</text></g><path d="M532 71a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path><path d="M436 41a10 10 0 0 1 10 10v40a10 10 0 0 0 10 10"></path><g><path d="M456 101h12"></path><path d="M520 101h12"></path><rect x="468" y="90" width="52" height="22" rx="10" ry="10"></rect><text x="494" y="105">date</text></g><path d="M532 101a10 10 0 0 0 10 -10v-40a10 10 0 0 1 10 -10"></path><path d="M436 41a10 10 0 0 1 10 10v70a10 10 0 0 0 10 10"></path><g><path d="M456 131h0"></path><path d="M532 131h0"></path><rect x="456" y="120" width="76" height="22" rx="10" ry="10"></rect><text x="494" y="135">boolean</text></g><path d="M532 131a10 10 0 0 0 10 -10v-70a10 10 0 0 1 10 -10"></path></g></g><path d="M552 41h20"></path></g><path d="M 572 41 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg></div></div></div><p>The rows of the relation are defined by a list of values per row with the type of the corresponding column. The values are <b>separated by whitespace comma or semicolon.</b><br>Simple strings only containing letters, numbers, hyphens, underlines, dots or periods ([0-9a-zA-Z\-_\.]+) can be written without single quotes. <i>NULL</i> and <i>null</i> are constant values. If null, true or false should be used as string they have te be quoted.<br>More complex strings must be surrounded by single quotes: <i>'content'</i> or <i>content</i>but '' or 'long content containing spaces and special characters like !' or 'null'.<br>Dates are written in ISO-format: YYYY-MM-DD without single quotes<br>A null-value can be written as <i>null</i> or <i>NULL</i> (without single quotes).<br>Numbers could be integers in the form (-?[0-9]+) or floats in the form (-?[0-9]+\.[0-9]+).<br>Numbers in single quotes are recognized as numbers if the column type is defined as number or has been detected to be number from a previous value; otherwise it will be a string value..<br>A boolean value is denoted as either <i>true</i> or <i>false</i> (case insensitive).</p><p>The header and rows can be indented if needed.</p><div class="example"><code>-- type for column b is defined by the first value
+				rho A {
+					a:number, b
+					1,        2
+					3,        4
+				}
+				cross join
+				{
+					a:string X.b:date   c:number
+					Alpha    1970-01-01 1
+					'Beta 2' 1970-01-02 3
+					''       1970-01-03 4
+				}</code></div></div></div><div><h4 id="relalg-relalgexpr" name="relalg-relalgexpr">relational algebra expression <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-relalgexpr"><i class="fa fa-link"></i></a></h4><div><p>A valid relational algebra expression is built by connecting <i>relation-name</i> or <i>inline-relation</i>as atoms with the defined unary and binary operators.</p>So a relational algebra expression is recursively defined as follows:<div class="too-wide"></div></div></div><h3 id="relalg-unary-operations" name="relalg-unary-operations">Unary operations <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-unary-operations"><i class="fa fa-link"></i></a></h3>Each unary operation follows the following syntax:<div class="b-syntax"><code><i>FUNCTION</i> ARGUMENT <strong>(</strong> CHILD_EXPRESSION <strong>)</strong></code></div>The parentheses are Optional.<div><h4 id="relalg-operations-projection" name="relalg-operations-projection">projection <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-projection"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">π</td></tr><tr><th>alternative syntax</th><td>pi</td></tr><tr><th>example</th><td><code class="relalg">pi a, b ( R )</code></td></tr></tbody></table></div><p>The argument is a subset of columns of the schema of the <i>CHILD_EXPRESSION</i> or a <a href="https://dbis-uibk.github.io/relax/help#relalg-valueexpr">value expression</a></p><div class="example"><code>π Customer.firstname, surname ( Customer )</code></div><div class="example"><code>pi c.id, [1] ( ρ c ( Customer ) )</code></div>Expressions can be used to create more complex statements using one or more columns of a single row.<div class="example"><code>pi c.id, lower(username)-&gt;user, concat(firstname, concat(' ', lastname))-&gt;fullname ( ρ c ( Customer ) )</code></div>The virtual column <i>ROWNUM</i> used in previous versions is not supported any more but the <code>rownum()</code> expression can be used to get the same information. And it can also be used directly in the boolean condition of a selection or join.<div class="example">In this example the top 5 customers with the most orders are selected, where countOrders could be the result of a previous aggregation.<code>pi firstname, lastname sigma rownum() &lt;= 5 tau countOrders desc Customer</code></div><div class="too-wide"><div><svg class="railroad-diagram" width="409" height="92" viewBox="0 0 409 92"><g transform="translate(.5 .5)"><path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path><g><path d="M40 31h0"></path><path d="M224 31h0"></path><g><path d="M40 31h0"></path><path d="M116 31h0"></path><path d="M40 31h20"></path><g><path d="M60 31h4"></path><path d="M92 31h4"></path><rect x="64" y="20" width="28" height="22" rx="10" ry="10"></rect><text x="78" y="35">π</text></g><path d="M96 31h20"></path><path d="M40 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M60 61h0"></path><path d="M96 61h0"></path><rect x="60" y="50" width="36" height="22" rx="10" ry="10"></rect><text x="78" y="65">pi</text></g><path d="M96 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path></g><path d="M116 31h10"></path><g><path d="M126 31h0"></path><path d="M214 31h0"></path><path d="M126 31h10"></path><g><path d="M136 31h0"></path><path d="M204 31h0"></path><rect x="136" y="20" width="68" height="22"></rect><text x="170" y="35">column</text></g><path d="M204 31h10"></path><path d="M136 31a10 10 0 0 0 -10 10v10a10 10 0 0 0 10 10"></path><g><path d="M136 61h20"></path><path d="M184 61h20"></path><rect x="156" y="50" width="28" height="22" rx="10" ry="10"></rect><text x="170" y="65">,</text></g><path d="M204 61a10 10 0 0 0 10 -10v-10a10 10 0 0 0 -10 -10"></path></g><path d="M214 31h10"></path></g><path d="M224 31h10"></path><g><path d="M234 31h0"></path><path d="M358 31h0"></path><rect x="234" y="20" width="124" height="22"></rect><text x="296" y="35">RA-expression</text></g><path d="M358 31h10"></path><path d="M 368 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg></div></div></div><div><h4 id="relalg-operations-selection" name="relalg-operations-selection">selection <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-selection"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">σ</td></tr><tr><th>alternative syntax</th><td>pi</td></tr><tr><th>example</th><td><code class="relalg">sigma a &gt; 2 ( R )</code></td></tr></tbody></table></div><p>The argument is a <a href="https://dbis-uibk.github.io/relax/help#relalg-valueexpr">boolean expression</a> that each row of <i>CHILD_EXPRESSION</i>is checked on</p><div class="example"><code>σ firstname = 'Bob' or firstname = 'Alice' ( Customer )</code></div><div class="example"><code>σ (id &gt; 10 and id &lt; 100) or id = 42 ( Customer )</code></div><div class="example">Selecting all customers with a firstname that has an even length.<code>σ mod(length(firstname),2) = 0 ( Customer )</code></div><div class="too-wide"><div><svg class="railroad-diagram" width="509" height="92" viewBox="0 0 509 92"><g transform="translate(.5 .5)"><path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path><g><path d="M40 31h0"></path><path d="M324 31h0"></path><g><path d="M40 31h0"></path><path d="M140 31h0"></path><path d="M40 31h20"></path><g><path d="M60 31h16"></path><path d="M104 31h16"></path><rect x="76" y="20" width="28" height="22" rx="10" ry="10"></rect><text x="90" y="35">σ</text></g><path d="M120 31h20"></path><path d="M40 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M60 61h0"></path><path d="M120 61h0"></path><rect x="60" y="50" width="60" height="22" rx="10" ry="10"></rect><text x="90" y="65">sigma</text></g><path d="M120 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path></g><path d="M140 31h10"></path><g><path d="M150 31h0"></path><path d="M314 31h0"></path><rect x="150" y="20" width="164" height="22"></rect><text x="232" y="35">boolean-expression</text></g><path d="M314 31h10"></path></g><path d="M324 31h10"></path><g><path d="M334 31h0"></path><path d="M458 31h0"></path><rect x="334" y="20" width="124" height="22"></rect><text x="396" y="35">RA-expression</text></g><path d="M458 31h10"></path><path d="M 468 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg></div></div></div><div><h4 id="relalg-operations-renamerelation" name="relalg-operations-renamerelation">rename relation <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-renamerelation"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">ρ</td></tr><tr><th>alternative syntax</th><td>rho</td></tr><tr><th>example</th><td><code class="relalg">( R ) join R.a = X.b (rho X ( R ))</code></td></tr></tbody></table></div><div>The argument is the new name for the Relation returned by <i>CHILD_EXPRESSION</i><div class="example">rename the Relation from "Customer" to "a":<code>π a.id, a.firstname ( ρ a ( Customer ) )</code></div><div class="too-wide"><div><svg class="railroad-diagram" width="485" height="92" viewBox="0 0 485 92"><g transform="translate(.5 .5)"><path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path><g><path d="M40 31h0"></path><path d="M300 31h0"></path><g><path d="M40 31h0"></path><path d="M124 31h0"></path><path d="M40 31h20"></path><g><path d="M60 31h8"></path><path d="M96 31h8"></path><rect x="68" y="20" width="28" height="22" rx="10" ry="10"></rect><text x="82" y="35">ρ</text></g><path d="M104 31h20"></path><path d="M40 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M60 61h0"></path><path d="M104 61h0"></path><rect x="60" y="50" width="44" height="22" rx="10" ry="10"></rect><text x="82" y="65">rho</text></g><path d="M104 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path></g><path d="M124 31h10"></path><g><path d="M134 31h0"></path><path d="M290 31h0"></path><rect x="134" y="20" width="156" height="22"></rect><text x="212" y="35">new relation name</text></g><path d="M290 31h10"></path></g><path d="M300 31h10"></path><g><path d="M310 31h0"></path><path d="M434 31h0"></path><rect x="310" y="20" width="124" height="22"></rect><text x="372" y="35">RA-expression</text></g><path d="M434 31h10"></path><path d="M 444 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg></div></div></div></div><div><h4 id="relalg-operations-renamecolumn" name="relalg-operations-renamecolumn">rename column <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-renamecolumn"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">ρ</td></tr><tr><th>alternative syntax</th><td>rho</td></tr><tr><th>example</th><td>the old and the new column names in a list (see example) <br>"←" can be substituted with "&lt;-"<code class="relalg block">pi x, b rho a-&gt;x {a, b
+						1, 2
+						3, 4
+					}</code></td></tr></tbody></table></div><div>The argument is the old and the new column names in a list (see example) <br>"←" can be substituted with "&lt;-"<div class="example">rename the columns id and firstname to myId and foobar:<code>ρ myId←id, foobar←firstname (π id, firstname ( Customer ) )</code></div><div class="too-wide"><div><svg class="railroad-diagram" width="657" height="182" viewBox="0 0 657 182"><g transform="translate(.5 .5)"><path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path><g><path d="M40 31h0"></path><path d="M472 31h0"></path><g><path d="M40 31h0"></path><path d="M124 31h0"></path><path d="M40 31h20"></path><g><path d="M60 31h8"></path><path d="M96 31h8"></path><rect x="68" y="20" width="28" height="22" rx="10" ry="10"></rect><text x="82" y="35">ρ</text></g><path d="M104 31h20"></path><path d="M40 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M60 61h0"></path><path d="M104 61h0"></path><rect x="60" y="50" width="44" height="22" rx="10" ry="10"></rect><text x="82" y="65">rho</text></g><path d="M104 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path></g><path d="M124 31h10"></path><g><path d="M134 31h0"></path><path d="M462 31h0"></path><path d="M134 31h10"></path><g><path d="M144 31h0"></path><path d="M452 31h0"></path><path d="M144 31h20"></path><g><path d="M164 31h0"></path><path d="M432 31h0"></path><path d="M164 31h10"></path><g><path d="M174 31h0"></path><path d="M258 31h0"></path><rect x="174" y="20" width="84" height="22"></rect><text x="216" y="35">new name</text></g><path d="M258 31h10"></path><g><path d="M268 31h0"></path><path d="M344 31h0"></path><path d="M268 31h20"></path><g><path d="M288 31h4"></path><path d="M320 31h4"></path><rect x="292" y="20" width="28" height="22" rx="10" ry="10"></rect><text x="306" y="35">←</text></g><path d="M324 31h20"></path><path d="M268 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M288 61h0"></path><path d="M324 61h0"></path><rect x="288" y="50" width="36" height="22" rx="10" ry="10"></rect><text x="306" y="65">&lt;-</text></g><path d="M324 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path></g><path d="M344 31h10"></path><g><path d="M354 31h0"></path><path d="M422 31h0"></path><rect x="354" y="20" width="68" height="22"></rect><text x="388" y="35">column</text></g><path d="M422 31h10"></path></g><path d="M432 31h20"></path><path d="M144 31a10 10 0 0 1 10 10v40a10 10 0 0 0 10 10"></path><g><path d="M164 91h0"></path><path d="M432 91h0"></path><path d="M164 91h10"></path><g><path d="M174 91h0"></path><path d="M242 91h0"></path><rect x="174" y="80" width="68" height="22"></rect><text x="208" y="95">column</text></g><path d="M242 91h10"></path><g><path d="M252 91h0"></path><path d="M328 91h0"></path><path d="M252 91h20"></path><g><path d="M272 91h4"></path><path d="M304 91h4"></path><rect x="276" y="80" width="28" height="22" rx="10" ry="10"></rect><text x="290" y="95">→</text></g><path d="M308 91h20"></path><path d="M252 91a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M272 121h0"></path><path d="M308 121h0"></path><rect x="272" y="110" width="36" height="22" rx="10" ry="10"></rect><text x="290" y="125">-&gt;</text></g><path d="M308 121a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path></g><path d="M328 91h10"></path><g><path d="M338 91h0"></path><path d="M422 91h0"></path><rect x="338" y="80" width="84" height="22"></rect><text x="380" y="95">new name</text></g><path d="M422 91h10"></path></g><path d="M432 91a10 10 0 0 0 10 -10v-40a10 10 0 0 1 10 -10"></path></g><path d="M452 31h10"></path><path d="M144 31a10 10 0 0 0 -10 10v100a10 10 0 0 0 10 10"></path><g><path d="M144 151h140"></path><path d="M312 151h140"></path><rect x="284" y="140" width="28" height="22" rx="10" ry="10"></rect><text x="298" y="155">,</text></g><path d="M452 151a10 10 0 0 0 10 -10v-100a10 10 0 0 0 -10 -10"></path></g><path d="M462 31h10"></path></g><path d="M472 31h10"></path><g><path d="M482 31h0"></path><path d="M606 31h0"></path><rect x="482" y="20" width="124" height="22"></rect><text x="544" y="35">RA-expression</text></g><path d="M606 31h10"></path><path d="M 616 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg></div></div></div></div><div><h4 id="relalg-operations-orderby" name="relalg-operations-orderby">order by <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-orderby"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">τ</td></tr><tr><th>alternative syntax</th><td>tau</td></tr><tr><th>example</th><td><code class="relalg">tau a asc, b desc ( R )</code></td></tr></tbody></table></div><div>The argument is a list of columns by which the relation should be ordered (see examples)<div class="example">order the result by the first column (default is ascending) and the second column descending:<code>τ [1], firstname desc (π id, firstname ( Customer ) )</code></div><div class="too-wide"><div><svg class="railroad-diagram" width="529" height="151" viewBox="0 0 529 151"><g transform="translate(.5 .5)"><path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path><g><path d="M40 31h0"></path><path d="M344 31h0"></path><g><path d="M40 31h0"></path><path d="M124 31h0"></path><path d="M40 31h20"></path><g><path d="M60 31h8"></path><path d="M96 31h8"></path><rect x="68" y="20" width="28" height="22" rx="10" ry="10"></rect><text x="82" y="35">τ</text></g><path d="M104 31h20"></path><path d="M40 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M60 61h0"></path><path d="M104 61h0"></path><rect x="60" y="50" width="44" height="22" rx="10" ry="10"></rect><text x="82" y="65">tau</text></g><path d="M104 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path></g><path d="M124 31h10"></path><g><path d="M134 31h0"></path><path d="M334 31h0"></path><path d="M134 31h10"></path><g><path d="M144 31h0"></path><path d="M324 31h0"></path><path d="M144 31h10"></path><g><path d="M154 31h0"></path><path d="M222 31h0"></path><rect x="154" y="20" width="68" height="22"></rect><text x="188" y="35">column</text></g><path d="M222 31h10"></path><g><path d="M232 31h0"></path><path d="M324 31h0"></path><path d="M232 31h20"></path><g><path d="M252 31h52"></path></g><path d="M304 31h20"></path><path d="M232 31a10 10 0 0 1 10 10v0a10 10 0 0 0 10 10"></path><g><path d="M252 51h4"></path><path d="M300 51h4"></path><rect x="256" y="40" width="44" height="22" rx="10" ry="10"></rect><text x="278" y="55">asc</text></g><path d="M304 51a10 10 0 0 0 10 -10v0a10 10 0 0 1 10 -10"></path><path d="M232 31a10 10 0 0 1 10 10v30a10 10 0 0 0 10 10"></path><g><path d="M252 81h0"></path><path d="M304 81h0"></path><rect x="252" y="70" width="52" height="22" rx="10" ry="10"></rect><text x="278" y="85">desc</text></g><path d="M304 81a10 10 0 0 0 10 -10v-30a10 10 0 0 1 10 -10"></path></g></g><path d="M324 31h10"></path><path d="M144 31a10 10 0 0 0 -10 10v69a10 10 0 0 0 10 10"></path><g><path d="M144 120h76"></path><path d="M248 120h76"></path><rect x="220" y="109" width="28" height="22" rx="10" ry="10"></rect><text x="234" y="124">,</text></g><path d="M324 120a10 10 0 0 0 10 -10v-69a10 10 0 0 0 -10 -10"></path></g><path d="M334 31h10"></path></g><path d="M344 31h10"></path><g><path d="M354 31h0"></path><path d="M478 31h0"></path><rect x="354" y="20" width="124" height="22"></rect><text x="416" y="35">RA-expression</text></g><path d="M478 31h10"></path><path d="M 488 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg></div></div></div></div><div><h4 id="relalg-operations-groupby" name="relalg-operations-groupby">group by <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-groupby"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">γ</td></tr><tr><th>alternative syntax</th><td>gamma</td></tr><tr><th>example</th><td><code class="relalg">gamma a; count(*)-&gt;x ( R )</code></td></tr></tbody></table></div><div>The argument is a list of columns to group by, separated by commas followed by a semicolon<br>and a list of aggregate functions to apply with their new name in form <span>AGG( COLUMN ) -&gt; NEW_NAME</span><div class="example">order the result by the first column (default is ascending) and the second column descending:<code>γ a, b ; sum(c)-&gt;x ( Customer )</code></div><p>If no grouping columns are provided the entire relation is the group.</p><div>supported aggregate functions by type:<div class="scroll-x"><table class="table"><thead><tr><td>&nbsp;</td><th>number</th><th>string</th><th>date</th></tr></thead><tbody><tr><th>COUNT( * )</th><td>yes</td><td>yes</td><td>yes</td></tr><tr><th>COUNT( column )</th><td>yes</td><td>yes</td><td>yes</td></tr><tr><th>MIN( column )</th><td>yes</td><td>yes</td><td>yes</td></tr><tr><th>MAX( column )</th><td>yes</td><td>yes</td><td>yes</td></tr><tr><th>SUM( column )</th><td>yes</td><td>no</td><td>no</td></tr><tr><th>AVG( column )</th><td>yes</td><td>no</td><td>no</td></tr></tbody></table></div></div></div></div><h3 id="relalg-binary-operations" name="relalg-binary-operations">Binary operations <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-binary-operations"><i class="fa fa-link"></i></a></h3>Each binary operation follows the following syntax:<div class="b-syntax"><code><strong>(</strong> CHILD_EXPRESSION <strong>)</strong> <strong>FUNCTION</strong> ARGUMENT <strong>(</strong>CHILD_EXPRESSION <strong>)</strong></code></div>The parentheses are Optional.<div><h4 id="relalg-operations-intersection" name="relalg-operations-intersection">intersection - ∩ <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-intersection"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">∩</td></tr><tr><th>alternative syntax</th><td>intersect</td></tr></tbody></table></div><div>no argument<div class="example"><code>( Customer ) ∩ ( Customer )</code></div>the schemas must be unifiable<div class="too-wide"><div><svg class="railroad-diagram" width="501" height="92" viewBox="0 0 501 92"><g transform="translate(.5 .5)"><path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path><path d="M40 31h10"></path><g><path d="M50 31h0"></path><path d="M174 31h0"></path><rect x="50" y="20" width="124" height="22"></rect><text x="112" y="35">RA-expression</text></g><path d="M174 31h10"></path><g><path d="M184 31h0"></path><path d="M316 31h0"></path><g><path d="M184 31h0"></path><path d="M316 31h0"></path><path d="M184 31h20"></path><g><path d="M204 31h32"></path><path d="M264 31h32"></path><rect x="236" y="20" width="28" height="22" rx="10" ry="10"></rect><text x="250" y="35">∩</text></g><path d="M296 31h20"></path><path d="M184 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M204 61h0"></path><path d="M296 61h0"></path><rect x="204" y="50" width="92" height="22" rx="10" ry="10"></rect><text x="250" y="65">intersect</text></g><path d="M296 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path></g></g><path d="M316 31h10"></path><g><path d="M326 31h0"></path><path d="M450 31h0"></path><rect x="326" y="20" width="124" height="22"></rect><text x="388" y="35">RA-expression</text></g><path d="M450 31h10"></path><path d="M 460 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg></div></div></div></div><div><h4 id="relalg-operations-union" name="relalg-operations-union">union - ∪ <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-union"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">∪</td></tr><tr><th>alternative syntax</th><td>union</td></tr></tbody></table></div><div>no argument<div class="example"><code>( Customer ) ∪ ( Customer )</code></div>the schemas must be unifiable<div class="too-wide"><div><svg class="railroad-diagram" width="469" height="92" viewBox="0 0 469 92"><g transform="translate(.5 .5)"><path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path><path d="M40 31h10"></path><g><path d="M50 31h0"></path><path d="M174 31h0"></path><rect x="50" y="20" width="124" height="22"></rect><text x="112" y="35">RA-expression</text></g><path d="M174 31h10"></path><g><path d="M184 31h0"></path><path d="M284 31h0"></path><g><path d="M184 31h0"></path><path d="M284 31h0"></path><path d="M184 31h20"></path><g><path d="M204 31h16"></path><path d="M248 31h16"></path><rect x="220" y="20" width="28" height="22" rx="10" ry="10"></rect><text x="234" y="35">∪</text></g><path d="M264 31h20"></path><path d="M184 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M204 61h0"></path><path d="M264 61h0"></path><rect x="204" y="50" width="60" height="22" rx="10" ry="10"></rect><text x="234" y="65">union</text></g><path d="M264 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path></g></g><path d="M284 31h10"></path><g><path d="M294 31h0"></path><path d="M418 31h0"></path><rect x="294" y="20" width="124" height="22"></rect><text x="356" y="35">RA-expression</text></g><path d="M418 31h10"></path><path d="M 428 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg></div></div></div></div><div><h4 id="relalg-operations-division" name="relalg-operations-division">division <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-division"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">÷</td></tr><tr><th>alternative syntax</th><td>/</td></tr></tbody></table></div><div>no argument<div class="example"><code>( Customer ) ÷ ( Customer )</code></div>the schemas must be unifiable<div class="too-wide"><div><svg class="railroad-diagram" width="437" height="92" viewBox="0 0 437 92"><g transform="translate(.5 .5)"><path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path><path d="M40 31h10"></path><g><path d="M50 31h0"></path><path d="M174 31h0"></path><rect x="50" y="20" width="124" height="22"></rect><text x="112" y="35">RA-expression</text></g><path d="M174 31h10"></path><g><path d="M184 31h0"></path><path d="M252 31h0"></path><g><path d="M184 31h0"></path><path d="M252 31h0"></path><path d="M184 31h20"></path><g><path d="M204 31h0"></path><path d="M232 31h0"></path><rect x="204" y="20" width="28" height="22" rx="10" ry="10"></rect><text x="218" y="35">÷</text></g><path d="M232 31h20"></path><path d="M184 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M204 61h0"></path><path d="M232 61h0"></path><rect x="204" y="50" width="28" height="22" rx="10" ry="10"></rect><text x="218" y="65">/</text></g><path d="M232 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path></g></g><path d="M252 31h10"></path><g><path d="M262 31h0"></path><path d="M386 31h0"></path><rect x="262" y="20" width="124" height="22"></rect><text x="324" y="35">RA-expression</text></g><path d="M386 31h10"></path><path d="M 396 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg></div></div></div></div><div><h4 id="relalg-operations-subtraction" name="relalg-operations-subtraction">subtraction / set-difference <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-subtraction"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>-</th><td class="math">∪</td></tr><tr><th>alternative syntax</th><td>\<br>except</td></tr></tbody></table></div><div>no argument<div class="example"><code>( pi firstname ( Customer ) ) - ( rho test&lt;-lastname ( pi lastname ( Customer ) ) )</code></div>the schemas must be unifiable<div class="too-wide"><div><svg class="railroad-diagram" width="477" height="122" viewBox="0 0 477 122"><g transform="translate(.5 .5)"><path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path><path d="M40 31h10"></path><g><path d="M50 31h0"></path><path d="M174 31h0"></path><rect x="50" y="20" width="124" height="22"></rect><text x="112" y="35">RA-expression</text></g><path d="M174 31h10"></path><g><path d="M184 31h0"></path><path d="M292 31h0"></path><g><path d="M184 31h0"></path><path d="M292 31h0"></path><path d="M184 31h20"></path><g><path d="M204 31h20"></path><path d="M252 31h20"></path><rect x="224" y="20" width="28" height="22" rx="10" ry="10"></rect><text x="238" y="35">-</text></g><path d="M272 31h20"></path><path d="M184 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M204 61h20"></path><path d="M252 61h20"></path><rect x="224" y="50" width="28" height="22" rx="10" ry="10"></rect><text x="238" y="65">\</text></g><path d="M272 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path><path d="M184 31a10 10 0 0 1 10 10v40a10 10 0 0 0 10 10"></path><g><path d="M204 91h0"></path><path d="M272 91h0"></path><rect x="204" y="80" width="68" height="22" rx="10" ry="10"></rect><text x="238" y="95">except</text></g><path d="M272 91a10 10 0 0 0 10 -10v-40a10 10 0 0 1 10 -10"></path></g></g><path d="M292 31h10"></path><g><path d="M302 31h0"></path><path d="M426 31h0"></path><rect x="302" y="20" width="124" height="22"></rect><text x="364" y="35">RA-expression</text></g><path d="M426 31h10"></path><path d="M 436 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg></div></div></div></div><div><h4 id="relalg-operations-crossjoin" name="relalg-operations-crossjoin">cross product <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-crossjoin"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">⨯</td></tr><tr><th>alternative syntax</th><td>cross join</td></tr></tbody></table></div><div>no argument<div class="too-wide"><div><svg class="railroad-diagram" width="561" height="92" viewBox="0 0 561 92"><g transform="translate(.5 .5)"><path d="M 20 21 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path><path d="M40 31h10"></path><g><path d="M50 31h0"></path><path d="M174 31h0"></path><rect x="50" y="20" width="124" height="22"></rect><text x="112" y="35">RA-expression</text></g><path d="M174 31h10"></path><g><path d="M184 31h0"></path><path d="M376 31h0"></path><g><path d="M184 31h0"></path><path d="M376 31h0"></path><path d="M184 31h20"></path><g><path d="M204 31h62"></path><path d="M294 31h62"></path><rect x="266" y="20" width="28" height="22" rx="10" ry="10"></rect><text x="280" y="35">⨯</text></g><path d="M356 31h20"></path><path d="M184 31a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path><g><path d="M204 61h0"></path><path d="M356 61h0"></path><path d="M204 61h10"></path><g><path d="M214 61h0"></path><path d="M274 61h0"></path><rect x="214" y="50" width="60" height="22" rx="10" ry="10"></rect><text x="244" y="65">cross</text></g><path d="M274 61h10"></path><path d="M284 61h10"></path><g><path d="M294 61h0"></path><path d="M346 61h0"></path><rect x="294" y="50" width="52" height="22" rx="10" ry="10"></rect><text x="320" y="65">join</text></g><path d="M346 61h10"></path></g><path d="M356 61a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path></g></g><path d="M376 31h10"></path><g><path d="M386 31h0"></path><path d="M510 31h0"></path><rect x="386" y="20" width="124" height="22"></rect><text x="448" y="35">RA-expression</text></g><path d="M510 31h10"></path><path d="M 520 31 h 20 m -10 -10 v 20 m 10 -20 v 20"></path></g></svg></div></div></div></div><div><h4 id="relalg-operations-innerjoin" name="relalg-operations-innerjoin">Theta-join / θ-join <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-innerjoin"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">⋈</td></tr><tr><th>alternative syntax</th><td>join<br>inner join</td></tr></tbody></table></div><div>join condition<div class="too-wide"></div></div><p>Special case:<br>The name of a single boolean column (like <code>R join a S</code>) can not be used directly as a join condition due to ambiguities in the relational algebra syntax.<br>The column must either be specified with its qualifier (<code>R join R.a S</code>) or wrapped in parentheses (<code>R join (a) S</code>).<br>This is not necessary for more complex boolean expressions. The problem is only that the single column name can not be distinguished from a relation name: the expression <code>X=R join S X</code> could be interpreted as <code>A=(R join S A)</code> instead of <code>A=(R join S) A</code>.</p></div><div><h4 id="relalg-operations-naturaljoin" name="relalg-operations-naturaljoin">natural join <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-naturaljoin"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">⋈</td></tr><tr><th>alternative syntax</th><td>join<br>natural join</td></tr></tbody></table></div><div>no argument<div class="example"><code class="block">ρ a ( Customer )<span class="math">⋈</span> a.name &lt; b.name ( ρ b ( Customer ) )</code></div><div class="too-wide"></div></div></div><div><h4 id="relalg-operations-leftjoin" name="relalg-operations-leftjoin">left outer join <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-leftjoin"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">⟕</td></tr><tr><th>alternative syntax</th><td>left outer join<br>left join</td></tr></tbody></table></div><div>optional join condition; if no join condition is given it acts as a natural left outer join<div class="too-wide"></div></div></div><div><h4 id="relalg-operations-rightjoin" name="relalg-operations-rightjoin">right outer join <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-rightjoin"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">⟖</td></tr><tr><th>alternative syntax</th><td>right outer join<br>right join</td></tr></tbody></table></div><div>optional join condition; if no join condition is given it acts as a natural right outer join<div class="too-wide"></div></div></div><div><h4 id="relalg-operations-fulljoin" name="relalg-operations-fulljoin">full outer join <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-fulljoin"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">⟗</td></tr><tr><th>alternative syntax</th><td>full outer join</td></tr></tbody></table></div><div>optional join condition; if no join condition is given it acts as a natural full outer join<div class="too-wide"></div></div></div><div><h4 id="relalg-operations-leftsemijoin" name="relalg-operations-leftsemijoin">left semi join <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-leftsemijoin"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">⋉</td></tr><tr><th>alternative syntax</th><td>left semi join</td></tr></tbody></table></div><div>no argument<div class="too-wide"></div></div><div><h4 id="relalg-operations-rightsemijoin" name="relalg-operations-rightsemijoin">right semi join <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-rightsemijoin"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">⋊</td></tr><tr><th>alternative syntax</th><td>right semi join</td></tr></tbody></table></div><div>no argument<div class="too-wide"></div></div></div><div><h4 id="relalg-operations-antijoin" name="relalg-operations-antijoin">anti semi join <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operations-antijoin"><i class="fa fa-link"></i></a></h4><div class="scroll-x"><table class="table table-nonfluid"><tbody><tr><th>symbol</th><td class="math">▷</td></tr><tr><th>alternative syntax</th><td>anti semi join<br>anti join</td></tr></tbody></table></div><div>no argument<br><div class="too-wide"></div></div></div><h3 id="relalg-operator-precedence" name="relalg-operator-precedence">Operator precedence <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-operator-precedence"><i class="fa fa-link"></i></a></h3><p>The operator precedence allows to obmit most of braces.<br>The used precedence is shown in the table below.<br>All operators are left associative.</p><div class="scroll-x"><table class="table"><thead><tr><th>order of precedence</th><th>Operator</th></tr></thead><tbody><tr><td>0</td><td><a href="https://dbis-uibk.github.io/relax/help#relalg-relation-name">relation-name</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-inline-relation">inline-relation</a></td></tr><tr><td>1</td><td><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-projection">projection</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-selection">selection</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-renamecolumn">rename (columns)</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-renamerelation">rename (relations)</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-groupby">group</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-orderby">order by</a></td></tr><tr><td>2</td><td><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-crossjoin">cross product</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-innerjoin">theta join</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-naturaljoin">natural join</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-leftjoin">left outer join</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-rightjoin">right outer join</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-fulljoin">full outer join</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-leftsemijoin">left semi-join</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-rightsemijoin">right semi-join</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-antijoin">anti semi-join</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-division">division</a></td></tr><tr><td>3</td><td><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-intersection">intersection</a></td></tr><tr><td>4</td><td><a href="https://dbis-uibk.github.io/relax/help#relalg-operations-union">union</a>,<a href="https://dbis-uibk.github.io/relax/help#relalg-operations-subtraction">subtraction</a></td></tr></tbody></table></div><div class="example"><code>A join B x C</code><br>is equal to<br><code>((A join B) x C)</code><br>because the cross product and the natural join are in the same precedence className.</div><div class="example"><code>sigma true A join sigma true B</code><br>is equal to<br><code>(sigma true (A)) join (sigma true (B))</code><br>because the unary operators have a higher precedence than the binary operators.</div><h3 id="relalg-misc" name="relalg-misc">Misc <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-misc"><i class="fa fa-link"></i></a></h3><h4 id="relalg-column" name="relalg-column">Column <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-column"><i class="fa fa-link"></i></a></h4>column is either<ul><li>the name of a column: "columnName"</li><li>the number of the column (starting with 1): "[column-number]"</li><li>a full qualified column: "qualifier.columnName"</li><li>a value expression (if allowed for the specific operation)</li></ul>the qualifier is optional if the column is unique in its schema.<h4 id="relalg-valueexpr" name="relalg-valueexpr">Value expressions <a class="anchor" href="https://dbis-uibk.github.io/relax/help#relalg-valueexpr"><i class="fa fa-link"></i></a></h4>With most operators you can use a value-expression which connects one or more columns of a single row to calculate a new value. This is possible for:<ul><li>the projection creating a new column (make sure to give the column a name)</li><li>the selection any expression evaluating to boolean can be used</li><li>for the joins any expression evaluating to boolean can be used; note that the <code>rownum()</code> expression always represents the index of the lefthand relation</li></ul>The expressions always operate on a single row/tuple of a table/relation.<br>If you want to calculate values vertically over all values of a specific column/attribute you need to use group by with an aggregate function. The following table lists all functions and operators that can be used in an expression. They can be combined and nested in any arbitrary order but note that they do evaluate to a single type defined by the outer most expression. The following operators can be used:<div class="scroll-x"><table class="table"><thead><tr><th>syntax</th><th>returns type</th><th>description</th></tr></thead><tbody><tr><td><code>a AND b</code></td><td>boolean</td><td>logical and</td></tr><tr><td><code>a OR b</code></td><td>boolean</td><td>logical or</td></tr><tr><td><code>a XOR b</code></td><td>boolean</td><td>logical exclusive or</td></tr><tr><td><code>NOT b</code></td><td>boolean</td><td>logical not</td></tr><tr><td><code>a = b a != b a &lt; b a &gt; b a &lt;= b a &gt;= b a != b</code></td><td>boolean</td><td>compares two values of the same type</td></tr><tr><td><code>a:string LIKE 'PATTERN'</code></td><td>boolean</td><td>returns true if expression evaluating to a string <code>a</code> matches the pattern given as the second operand.<br>The pattern has to be given as a string literal;<p>An underscore (<code>_</code>) in the pattern stands for any single character and any percent sign (<code>%</code>) stands for any sequence of zero or more characters.</p></td></tr><tr><td><code>a:string ILIKE 'PATTERN'</code></td><td>boolean</td><td>same as <code>LIKE</code> but matches case-insensitive.<br>This is not in the SQL standard but is a PostgreSQL extension.</td></tr><tr><td><code>a + b a - b a * b a / b a % b</code></td><td>number</td><td>arithmetic addition, subtraction, multiplication, division, modulo</td></tr><tr><td><code>rand()</code></td><td>number</td><td>returns a random number in the interval [0, 1]</td></tr><tr><td><code>rownum()</code></td><td>number</td><td>returns the index of the current row (starting with 0).<br>If the function is used in a binary relational algebra expression (e.g. a join) it always represents the index of the left operand.</td></tr><tr><td><code>length(a:string)</code></td><td>number</td><td>returns the length of the string</td></tr><tr><td><code>date(a:string)</code></td><td>date</td><td>parses the given string to a date object. The string must be in the form YYYY-MM-DD</td></tr><tr><td><code>adddate(a:date, b:number)</code></td><td>date</td><td>adds the given number of days to date <code>a</code></td></tr><tr><td><code>subdate(a:date, b:number)</code></td><td>date</td><td>subtracts the given number of days from date <code>a</code></td></tr><tr><td><code>now() transaction_timestamp() statement_timestamp()</code></td><td>date</td><td>returns a timestamp representing the start of the query execution<br>transaction- and statement start are the very same value due to the lack of a transaction concept</td></tr><tr><td><code>clock_timestamp()</code></td><td>date</td><td>returns the current timestamp while executing the query</td></tr><tr><td><code>year(a:date)</code></td><td>number</td><td>returns the year component of a given date</td></tr><tr><td><code>month(a:date)</code></td><td>number</td><td>returns the month component of a given date as a number. (1 = Sunday, 2 = Monday, ..., 7 = Saturday)</td></tr><tr><td><code>day(a:date) dayofmonth(a:date)</code></td><td>number</td><td>returns the day component of a given date as a number in the range 1 to 31</td></tr><tr><td><code>hour(a:date)</code></td><td>number</td><td>returns the hour component of a given date as a number in the range 0 to 23</td></tr><tr><td><code>minute(a:date)</code></td><td>number</td><td>returns the minute component of a given date as a number in the range 0 to 59</td></tr><tr><td><code>second(a:date)</code></td><td>number</td><td>returns the second component of a given date as a number in the range 0 to 59</td></tr><tr><td><code>concat(a:string [, ...])</code></td><td>string</td><td>concatenates the given strings</td></tr><tr><td><code>upper(a:string) ucase(a:string)</code></td><td>string</td><td>converts the given string to upper-case</td></tr><tr><td><code>lower(a:string) lcase(a:string)</code></td><td>string</td><td>converts the given string to lower-case</td></tr><tr><td><code>strlen(a:string)</code></td><td>number</td><td>number of characters of the string</td></tr><tr><td><code>abs(a:number)</code></td><td>number</td><td>the absolute value of the given number</td></tr><tr><td><code>add(a, b) sub(a, b) mul(a, b) div(a, b) mod(a, b)</code></td><td>number</td><td>arithmetic addition, <br>subtraction, <br>multiplication, <br>division or <br>modulo of the given numbers</td></tr><tr><td><code>round(a) floor(a) ceil(a)</code></td><td>number</td><td>round to nearest integer, <br>largest integer not greater than the argument or<br>smallest integer not less than the argument</td></tr><tr><td><code class="sql">coalesce(<strong>value</strong> [, ...])</code></td><td>type of <strong>value</strong></td><td>returns the first of its arguments that is not null or null if all arguments are null. Note that all arguments must have the same datatype.</td></tr><tr><td><code class="sql">CASE WHEN <strong>condition</strong> THEN result [WHEN ...] [ELSE <strong>result</strong>] END</code></td><td>type of <strong>result</strong></td><td>returns the first result where the condition evaluates to true. If all conditions are false the else part is executed or null is returnt if the else part is missing. Note that all results must have the same datatype.</td></tr></tbody></table></div>The operator precedence is the same as used in <a href="https://dev.mysql.com/doc/refman/5.7/en/operator-precedence.html">MySQL</a> (from strong to weak):<div class="scroll-x"><table class="table"><thead><tr><th>order of precedence</th><th>Operators</th></tr></thead><tbody><tr><td>0</td><td>functions, constants, columns</td></tr><tr><td>1</td><td>! (boolean not)</td></tr><tr><td>2</td><td>- (unary minus)</td></tr><tr><td>3</td><td>*, /, %</td></tr><tr><td>4</td><td>-, +</td></tr><tr><td>5</td><td>= (comparison), &gt;=, &gt;, &lt;=, &lt;, &lt;&gt;, !=, LIKE, ILIKE</td></tr><tr><td>6</td><td>CASE, WHEN, THEN, ELSE</td></tr><tr><td>7</td><td>AND</td></tr><tr><td>8</td><td>XOR</td></tr><tr><td>9</td><td>OR, ||</td></tr></tbody></table></div><h2 id="sql-reference" name="sql-reference">Reference - SQL <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-reference"><i class="fa fa-link"></i></a></h2><p>The goal of the SQL mode of the relational algebra calculator is to provide a translation from SQL to relational algebra to show how they are related. It does not support all features a real database system like <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> or <a href="https://www.mysql.com/" target="_blank">MySQL</a> does because the goal is to provide a translation into relational algebra. This means that many features like correlated-substatements are not supported because the translation into relational algebra is not trivial and modern database systems use an extended set of operators internally that do not require a one-to-one translation into "classNameical" relational algebra. Therefore the learning effect for users of this tool would not be that big.</p><h3 id="sql-syntax" name="sql-syntax">General syntax <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-syntax"><i class="fa fa-link"></i></a></h3><p>All keywords are case insensitv.</p><p>The following Synopsis is a adapted version of <a href="http://www.postgresql.org/docs/9.4/static/sql-select.html" target="_blank">PostgreSQL</a> and shows the general syntax of the supported SQL. Brackets indicate optional parts. Braces and vertical lines indicate that one of the alternatives has to be chosen. Dots mean that the preceding element can be repeated.</p><code class="block sql">[ <a href="https://dbis-uibk.github.io/relax/help#sql-with">WITH</a> <strong>with_query</strong> [, ...] ]<a href="https://dbis-uibk.github.io/relax/help#sql-select">SELECT</a> [ DISTINCT ] * | <strong>expression</strong> [ [ AS ] <strong>output_name</strong> ] [, ...]<a href="https://dbis-uibk.github.io/relax/help#sql-from">FROM</a> <strong>from_item</strong> [, ...] [ <a href="https://dbis-uibk.github.io/relax/help#sql-where">WHERE</a> <strong>condition</strong> ] [ <a href="https://dbis-uibk.github.io/relax/help#sql-groupby">GROUP BY</a> <strong>column</strong> [, ...] ] [ <a href="https://dbis-uibk.github.io/relax/help#sql-having">HAVING</a> <strong>condition</strong> ] [ { <a href="https://dbis-uibk.github.io/relax/help#sql-setoperators">UNION</a> | <a href="https://dbis-uibk.github.io/relax/help#sql-setoperators">INTERSECT</a> | <a href="https://dbis-uibk.github.io/relax/help#sql-setoperators">EXCEPT</a>  } [ ALL | DISTINCT ] <strong>select</strong> ] [ <a href="https://dbis-uibk.github.io/relax/help#sql-orderby">ORDER BY</a> <strong>column</strong> [ ASC | DESC ] [, ...] ] [ <a href="https://dbis-uibk.github.io/relax/help#sql-limit">LIMIT</a> { <strong>count</strong> | ALL  } ] [ <a href="https://dbis-uibk.github.io/relax/help#sql-limit">OFFSET</a> <strong>start</strong> [ ROW | ROWS ] ] [ <a href="https://dbis-uibk.github.io/relax/help#sql-limit">FETCH</a> { FIRST | NEXT  } [ <strong>count</strong> ] { ROW | ROWS } ONLY ] where <strong>from_item</strong> can be one of:<strong>table_name</strong> [ AS <strong>alias</strong> ]<strong>with_query_name</strong> [ AS <strong>alias</strong> ] ( <strong>select</strong> ) AS <strong>alias</strong><strong>from_item</strong> CROSS JOIN <strong>from_item</strong><strong>from_item</strong> NATURAL JOIN <strong>from_item</strong><strong>from_item</strong> [ INNER ] JOIN <strong>from_item</strong> ON join_condition<strong>from_item</strong> [ INNER ] JOIN <strong>from_item</strong> NATURAL<strong>from_item</strong> [ INNER ] JOIN <strong>from_item</strong> USING ( join_column [, ...] )<strong>from_item</strong><strong>from_item</strong> { LEFT | RIGHT | FULL } [ OUTER ] JOIN ON join_condition<strong>from_item</strong><strong>from_item</strong> { LEFT | RIGHT | FULL } [ OUTER ] JOIN NATURAL <strong>from_item</strong><strong>from_item</strong> { LEFT | RIGHT | FULL }  [ OUTER ] JOIN USING ( join_column [, ...] ) <strong>from_item</strong>and <strong>with_query</strong> is:<strong>with_query_name</strong> AS ( <strong>select</strong> )</code><div class="too-wide"></div><h3 id="sql-translation" name="sql-translation">Semantic and Translation to relational algebra <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-translation"><i class="fa fa-link"></i></a></h3><h4 id="sql-translation-sequence" name="sql-translation-sequence">Sequence of execution <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-translation-sequence"><i class="fa fa-link"></i></a></h4><p>The SQL statement is translated directly into relational algebra. To understand some of the effects of the tool it might be helpful to understand the steps of the translation process. As mentioned before, real database systems might take a different (more complex) aproach but this should help to get an idea of how SQL could be translated into "classNameical" relational algebra.</p><p>The following list shows the translation from SQL into relational algebra starting with the inner most relational algebra expression at the top.</p><ol><li>replace all usages of the temporary-tables defined in the WITH-clause with their definitions</li><li>FROM-clause is translated left associative with all joins having the same precedence (<code>,</code>is a cross join)</li><li>selection with condition from where-clause is added</li><li>group by</li><li>selection with condition from having-clause</li><li>union/intersect/except</li><li>projection is added to choose the requested columns of the SELECT-clause</li><li>the columns are renamed to get the requested output-name specified in the SELECT-clause</li><li>order by</li><li>limit/offset is mapped to a selection</li></ol><h4 id="sql-select" name="sql-select">SELECT <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-select"><i class="fa fa-link"></i></a></h4><p>The direct translation into relational algebra with implicit duplication elimination requires the <code>distinct</code>keyword to be equivalent. A warning is shown if you omit it.</p><p>The select-clause is translated into up to two relalg operators.</p><ul><li>The most basic case is <code>select <strong>*</strong> ...</code> where no changes are made to the schema of the result. Therefore no projection is needed. You can use the optional table-alias-prefix if the columns of a single table/relation should be returned only: <code class="sql">select distinct R.* from R inner join S</code></li><li>When a subset of the columns are selected and/or reordered (<code> select a, b from ...</code>) then a single <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-projection">projection</a> is used.</li><li>Additionally to the previous case a <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-renamecolumn">rename-column operator</a> is added after the projection if new output-names are given with <code>as foo</code>. e.g. <code>select a <strong>as foo</strong> from ...</code></li></ul><p>The allowed expressions are the same as for the <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-projection">projection</a>. So it can be either the name of the column (with optional renaming using <code>as</code>) or a complex<a href="https://dbis-uibk.github.io/relax/help#sql-valueexpr">value expression</a>. In the latter case a output-name must be given using<code>as</code> because the tool requires every column to have a name.</p><h4 id="sql-from" name="sql-from">FROM <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-from"><i class="fa fa-link"></i></a></h4><p>In its simplest form the from-clause holds a single table/relation name that is used directly in the relalg statement. If the optional table-alias is specified with <code>table as foo</code> this is reflected by wrapping the relation in a <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-renamerelation">rename-relation operator</a> with the given output-name.</p><code class="example sql">select distinct x.a, x.b from R as x</code><p>Joins can be expressed using the ANSI join syntax</p><code class="example sql">select distinct * from A, B inner join C on ... inner join D natural natural join E left outer join F on ... left outer join G natural right outer join H on ... right outer join I natural full outer join J on ... full outer join K natural where ...</code><p>The comma is part of the old join syntax and is translated into a <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-crossjoin">cross join</a>.</p><code class="example sql">select distinct * from R, S as s, T where s.a = R.a</code><p>Instead of the name of relation a non-correlated substatement can be used. A table alias must be provided with <code>(...) as foo</code>.<br>A non-correlated substatement can be directly translated into relational algebra by just translate the sub-statement into relational algebra and use the resulting operator tree instead of the relation.</p><p>Non-correlated means that it must not reference/use any columns of tables defined in the outer scope.<br>This limitation is intentionally because the translation into relational algebra is not trivial and modern database systems use an extended set of operators internally that do not require a one-to-one translation into "classNameical" relational algebra. Therefore the learning effect for users of this tool would not be that big.</p><code class="example sql">select distinct * from R, (select * from S where a &gt; 0) as x where x.a = R.a</code><h4 id="sql-where" name="sql-where">WHERE <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-where"><i class="fa fa-link"></i></a></h4><p>The boolean condition in the where-clause can be any <a href="https://dbis-uibk.github.io/relax/help#sql-valueexpr">expression</a> evaluating to boolean.</p><p>The where clause is directly translated to an <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-selection">relational algebra selection</a> with the very same condition. This selection is applied after joining relations of the from-clause therefore has to use the original column names.</p><p>Subquery Expressions like <code>EXISTS</code>, <code>IN</code>, <code>ANY/SOME</code> or <code>ALL</code>are <strong>not supported</strong> because their translation into relational algebra is not trivial and modern database systems use an extended set of operators internally that do not require a one-to-one translation into "classNameical" relational algebra. Therefore the learning effect for users of this tool would not be that big.</p><h4 id="sql-groupby" name="sql-groupby">GROUP BY <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-groupby"><i class="fa fa-link"></i></a></h4><p>The GROUP-BY-clause takes a list of column names only argument.</p><p>The GROUP-BY-clause is directly translated to the <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-groupby">relational algebra group-by operation</a> and is executed directly after the selection built from the WHERE-clause and before the projection/renaming build from the SELECT-clause. Therefore the column names that can be used are the ones available after all joining all tables.</p><p>The aggregations used in the <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-groupby">relational algebra group-by operation</a> are taken from the SELECT-clause and an output-name must be given using <code>as</code>because the tool requires every column to have a name.</p><p>If no aggregations are present in the SELECT-clause a projection is used instead of the group-by operation because <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-groupby">sigma</a> without aggregation has the very same effect.</p><p>Every non-aggregation-column in the SELECT-clause must be present in the group by clause because the would not be available after the grouping.</p><h4 id="sql-having" name="sql-having">HAVING <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-having"><i class="fa fa-link"></i></a></h4><p>The HAVING-Clause represents an optional <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-selection">relational algebra selection</a>. The boolean condition can be any <a href="https://dbis-uibk.github.io/relax/help#sql-valueexpr">expression</a> evaluating to boolean.</p><p>The resulting selection is executed directly after the <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-groupby">relational algebra group-by operation</a>.</p><p>Unlike <a href="http://www.postgresql.org/docs/9.4/static/sql-select.html#SQL-HAVING" target="_blank">PostgreSQL</a>the HAVING-clause is only allowed when either a aggregation or grouping is present.</p><h4 id="sql-orderby" name="sql-orderby">ORDER BY <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-orderby"><i class="fa fa-link"></i></a></h4><p>Order by takes a list of column names or indices of columns (starting with 1) as its argument.</p><p>It is directly translated to the <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-orderby">extended relational algebra operation order by (tau)</a>.</p><h4 id="sql-limit" name="sql-limit">LIMIT <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-limit"><i class="fa fa-link"></i></a></h4><p>The LIMIT-clause can be either specified with the LIMIT-OFFSET syntax used by PostgreSQL and MySQL or the FETCH-FIRST syntax introduced in SQL:2008.</p><p>It is translated into a <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-selection">relational algebra selection</a> using the<code>rownum()</code>-function to limit the number of rows returned.</p><h4 id="sql-setoperators" name="sql-setoperators">UNION / INTERSECT / EXCEPT <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-setoperators"><i class="fa fa-link"></i></a></h4><p>The Set-Operators UNION, INTERSECT and EXCEPT directly map to the relational algebra operators <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-union">union</a>, <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-intersection">intersection</a> and <a href="https://dbis-uibk.github.io/relax/help#relalg-operations-subtraction">subtraction</a>.</p><p>The keyword <code>DISTINCT</code> is optional because it represents the default behavior. The keyword<code>ALL</code> is ignored and a warning is shown because the targeted relational algebra has a implicit elimination duplicate rows.</p><p>Parentheses can be used to create more complex statements:<br><code class="example sql">( select distinct * from S union select distinct * from T ) except select distinct * from T order by 1 limit 1</code></p><h4 id="sql-with" name="sql-with">WITH <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-with"><i class="fa fa-link"></i></a></h4><p>The WITH-clause (also known as <i>common table expressions</i>) provides a way to define subqueries for single or multiple use in a statement. This can be thought as defining a temporary table for that query in SQL terminology or <a href="https://dbis-uibk.github.io/relax/help#relalg-assignment">creating variables in relational algebra</a>. Recursive evaluation is not supported.</p><p>Each subquery can be referenced by the name from the WITH-clause. The subquery is automatically renamed to the name used in the WITH-clause.</p><h4 id="sql-valueexpr" name="sql-valueexpr">Value expressions <a class="anchor" href="https://dbis-uibk.github.io/relax/help#sql-valueexpr"><i class="fa fa-link"></i></a></h4><p>Value expressions are used for boolean expressions for WHERE- and HAVING-clause, the boolean conditions of joins and calculated values in the SELECT-clause. The type of a expression is either <i>string</i>, <i>number</i>, <i>date</i> or <i>boolean</i> and is determined by the used operations and columns.</p><p>The supported functions and operations are the same for SQL and relational algebra: <a href="https://dbis-uibk.github.io/relax/help#relalg-valueexpr">value expression</a></p><h2 id="license-help" name="license-help">Licence <a class="anchor" href="https://dbis-uibk.github.io/relax/help#license-help"><i class="fa fa-link"></i></a></h2><p><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" src="./RelaX - relational algebra calculator_files/88x31.png" style="border-width: 0px;"></a><br>This document by Johannes Kessler is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p></div></div></div></div></div>
+<script type="text/javascript" src="./RelaX - relational algebra calculator_files/calc.56237b6b93a1f200ea3c.bundle.js"></script>
+
+</body></html>

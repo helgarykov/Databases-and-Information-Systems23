@@ -1,0 +1,87 @@
+﻿@page "/retrievetasks"
+
+@using BlazorProject.Data
+@using Dapper
+@using global::Data.ViewModels
+@using global::Data.Models
+@using global::Data.Services
+@inject MyTasksService Tasks
+@inject TaskService Service
+@inject LoginIdentity Identity
+
+<h2>Delete task</h2>
+<div>
+    <EditForm Model="@newTask" OnSubmit="@DeleteTaskById">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="Id">Task ID to delete:</label>
+                <InputNumber id="Id" class="form-control" @bind-Value="newTask.Id" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
+</div>
+
+<h2>My Tasks</h2>
+
+@if (tasks == null)
+{
+<p><em>Loading...</em></p>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>TaskId</th>
+            <th>DateOfTask</th>
+            <th>StartTime</th>
+            <th>EndTime</th>
+            <th>Urgent</th>
+            <th>Difficult</th>
+            <th>CityAddress</th>
+            <th>Street</th>
+            <th>HouseNr</th>
+            <th>TranslatorId</th>
+            <th>LanguageId</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var task in tasks)
+        {
+            <tr>
+                <td>@task.Id</td>
+                <td>@task.DateOfTask</td>
+                <td>@task.StartTime</td>
+                <td>@task.EndTime</td>
+                <td>@task.Urgent</td>
+                <td>@task.Difficult</td>
+                <td>@task.CityAddress</td>
+                <td>@task.Street</td>
+                <td>@task.HouseNr</td>
+                <td>@task.TranslatorId</td>
+                <td>@task.LanguageId</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+
+@code {
+    private MyTask newTask = new();
+    private IEnumerable<MyTask>? tasks;
+
+    protected override void OnInitialized()
+    {
+        tasks = Tasks.GetClientTasksViaDapper(Identity.Id);
+    }
+
+    protected void DeleteTaskById()
+    {
+        Service.DeleteTaskById(newTask.Id);
+        OnInitialized();
+    }
+
+}
+

@@ -1,0 +1,75 @@
+DIS  Assignment 1
+Exercise 1.
+-----------
+a) E/R model
+  Wrong - You MUST use the format (arrows, etc.) depicted in the text book.
+  A relationship between two boxes (entities), MUST have a diamond element between them.
+  How do I identify if an element (box) is a relationship or an entity ?
+  How do I identify if a entity is weak ?
+  -> if using a format different from the text book GUW, you MUST write have to read the elements !!!
+
+b) Modeling choices
+-------------------
+b1) Entities OR Relationships
+  OK
+
+b2) Using n-ary relationships ?
+  YES - How do I see this in the E/R diagram ?
+  
+b3) Uniqueness / Constraints / Weak entities / ISA
+  OK, but also see a) above.
+  Use of ON DELETE... is very good.
+  Good use of weak entities. 
+
+
+c) Relational model (SQL)
+  Naming convention:
+  -> Make sure we can identify tables in the E/R-diagram.
+  13  OKs
+  Very good.
+
+d) Signature and database schema
+  13 OKs
+  
+e) Formulas (RC)
+----------------
+(i)
+  OK
+
+(ii)
+  OK
+
+(iii)
+  OK
+
+(iv)
+  OK
+
+
+Message to alle submissions (maybe not relevant for your submission)
+--------------------------------------------------------------------
+If using a format different from the text book GUW, you MUST write how to read the elements !!!
+
+Arrows is a count (not a direction). It goes from entity to entity (not entity to relationship).
+Use the arrows depicted in the text book GUW.
+
+A relationship between two boxes (entities), MUST have a diamond element between them.
+
+A running primary key "is the poor man's key" and should be avoided if possible.
+
+Candidates for Weak entities are entities that cannot stand alone, 
+ie. it often have a running number as primary key or no primary key.
+If the entity only makes sence using a primary key (tuple) in another entity, 
+then is should be weak, and the entity with the primary key is a 'Supporting Entity'.
+
+Separate entities and relationships in SQL makes it easier to understand + change.
+
+Can a dish exist if it isn’t offered by a restaurant ?
+
+Different kind of orders (Take away, Take out, United) is an ISA-relationship.
+
+A food order must have at least one dish, correct ?
+-> does that mean we must have a referential constraint ?
+
+end.
+********************************************************************

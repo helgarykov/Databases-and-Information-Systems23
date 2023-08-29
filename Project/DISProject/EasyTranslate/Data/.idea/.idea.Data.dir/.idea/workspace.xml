@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b165c482-8068-466c-b8a8-fa59cad34a93" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../.idea/.idea.EasyTranslate/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/.idea.EasyTranslate/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/.idea.EasyTranslate/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/.idea.EasyTranslate/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ConsoleProject/obj/ConsoleProject.csproj.nuget.dgspec.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ConsoleProject/obj/ConsoleProject.csproj.nuget.g.props" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ConsoleProject/obj/ConsoleProject.csproj.nuget.g.targets" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ConsoleProject/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ConsoleProject/obj/Debug/net7.0/ConsoleProject.AssemblyInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ConsoleProject/obj/Debug/net7.0/ConsoleProject.AssemblyInfoInputs.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ConsoleProject/obj/Debug/net7.0/ConsoleProject.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ConsoleProject/obj/Debug/net7.0/ConsoleProject.GlobalUsings.g.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ConsoleProject/obj/Debug/net7.0/ConsoleProject.assets.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ConsoleProject/obj/Debug/net7.0/ConsoleProject.csproj.AssemblyReference.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ConsoleProject/obj/project.packagespec.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ConsoleProject/obj/rider.project.restore.info" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/obj/Debug/net7.0/Data.AssemblyInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/obj/Debug/net7.0/Data.AssemblyInfoInputs.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/obj/Debug/net7.0/Data.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/obj/Debug/net7.0/Data.GlobalUsings.g.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/obj/Debug/net7.0/Data.assets.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/obj/Debug/net7.0/Data.csproj.AssemblyReference.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/obj/project.packagespec.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/bin/Debug/net7.0/CoverletSourceRootsMapping" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/obj/Debug/net7.0/Tests.AssemblyInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/obj/Debug/net7.0/Tests.AssemblyInfoInputs.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/obj/Debug/net7.0/Tests.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/obj/Debug/net7.0/Tests.GlobalUsings.g.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/obj/Debug/net7.0/Tests.assets.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/obj/Debug/net7.0/Tests.csproj.AssemblyReference.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/obj/Tests.csproj.nuget.dgspec.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/obj/Tests.csproj.nuget.g.props" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/obj/Tests.csproj.nuget.g.targets" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/obj/project.packagespec.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Tests/obj/rider.project.restore.info" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="2Q0xvOsOSpPK4Dt7xgd9k13YGer" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b165c482-8068-466c-b8a8-fa59cad34a93" name="Changes" comment="" />
+      <created>1684504530146</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1684504530146</updated>
+      <workItem from="1684504535920" duration="209000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>

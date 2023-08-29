@@ -1,0 +1,122 @@
+Task 3.
+
+1. Find the overpriced PCs. Those are PCs that are more expensive and 
+at the same time worse than
+some other PC in at least two out of three categories (speed, ram, hd; bigger is better).
+
+a.
+σ (PC.speed < PC1.speed ∧ PC.hd < PC1.hd ∨ 
+PC.hd < PC1.hd ∧ PC.ram < PC1.ram ∨
+PC.speed < PC1.speed ∧ PC.ram < PC1.ram)
+((ρ PC1(PC)) ⨝ PC.price > PC1.price (PC)) 
+
+<=>
+
+σ PC.price > PC1.price ∧ 
+(PC.speed < PC1.speed ∧ PC.hd < PC1.hd ∨ 
+PC.hd < PC1.hd ∧ PC.ram < PC1.ram ∨ 
+PC.speed < PC1.speed ∧ PC.ram < PC1.ram)
+((ρ PC1(PC)) ⨯ PC) 
+
+Note: rename several columns in a table: 
+the columns id and firstname to myId and foobar:
+
+    ρ myId←id, foobar←firstname (π id, firstname ( Customer ) )
+
+2.
+Find those PCs that are faster (in terms of speed) than any laptop.
+                                                        ----------
+
+
+PC ⨝ PC.speed > maxspeed (γ; max(speed) → maxspeed (Laptop)) 
+
+γ (group by) returns a table; if we want to use the result of γ, 
+we need to do a join on the result
+of this grouping (on maxspeed)
+
+3. 
+
+Find the makers, models, and prices of all offered devices.
+
+ π Product.model, Product.maker, Printer.price 
+ (Product ⨝ Product.model = Printer.model
+ ((π model, price (Printer)) ∪ ( π model, price (Laptop)) ∪ ( π model, price (PC))))
+
+ Union of two tables requires same size and type of columns.
+ Thus, to unite 2 tables with different nr of columns, we do
+ projection of columns from 2 tables we need in the result table. 
+
+ Union unites into one column "price": Printer.price + PC.price
+
+ Join joins into one row (fx slide 4-ra, page 21)
+
+ 4.   
+
+Find the most expensive device manufactured by each maker:
+        -----                                  -----------
+
+γ maker; max(PC.price) → maxprice (
+-------
+(π maker, model (Product) ⨝ (((π model,price (PC) ∪ π model, price (Laptop) ∪ π model,price (Printer))))))
+                                        ---------
+Note: price in the result of unions table acquires the name of the column in the 1st table (here "PC.price")
+
+5.
+
+Find PC–laptop pairs that are equally fast.
+
+π PC.model, Laptop.model (PC ⨝ PC.speed = Laptop.speed Laptop)
+
+6.
+
+Find laptops that cost more than the average laptop price.
+
+π Laptop1.model, Laptop1.price, averagelap
+( ρ Laptop1 (Laptop) ⨝ Laptop1.price > averagelap γ; avg(Laptop.price) → averagelap (Laptop))
+
+Laptop1.model,"Laptop1.price","averagelap"
+2001,"3673","1583"
+2005,"2500","1583"
+2006,"1700","1583"
+2010,"2300","1583"
+
+7.
+For every hard disk size (present in the PC table) compute the number of PCs of that size and their
+average price. Sort the result by the hard disk size (in ascending order).
+
+τ PC.hd asc,[2] 
+(γ PC.hd, averageprice; count(PC.hd) → count 
+(π PC.hd, PC.model, averageprice (PC ⨝ γ PC.hd; avg(price) → averageprice (PC))))
+
+ODER: order the result by the first column (default is ascending) and the second column descending:
+
+    τ [1], firstname desc (π id, firstname ( Customer ) )
+
+8.
+
+For each printer type, find the most and the least expensive model.
+
+π Printer.type, maxprice, minprice 
+
+(γ Printer.type; max(price) → maxprice (Printer) ⨝ Printer.type=Printer1.type 
+
+γ Printer1.type; min(price) → minprice (ρ Printer1 (Printer)))
+
+Note: group by type and 1st find maxprice in Printer table
+
+     then group by type and find min price in Printer1 (rename)
+
+     then inner join Printer and Printer1 on condition Printer.type=Printer1.type
+
+     finally π Printer.type, maxprice, minprice
+
+Output: 
+Printer.type,"maxprice","minprice"
+ink-jet,"120","99"
+laser,"899","120"
+
+9.
+
+ρ computer (π model, hd/(speed*speed) → BMI(PC)) ∪
+
+(π model, BMI <- hd/(speed*speed) (Laptop))

@@ -1,0 +1,76 @@
+@page "/createreview"
+
+@using BlazorProject.Data
+@using Dapper
+@using global::Data.Models
+@using global::Data.ViewModels
+@using global::Data.Services
+@using Task = System.Threading.Tasks.Task
+@inject TaskReviewService Review
+@inject LoginIdentity Identity
+@using global::Data.Services
+
+<h3>Create a Review of your Task</h3>
+
+
+@if (showBanner)
+{
+    <div>You have successfully posted a task review!</div>
+}
+
+<div>
+    <EditForm Model="@newTaskReview" OnSubmit="@AddNewReview">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="TaskId">Task Id:</label>
+                <InputNumber id="TaskId" class="form-control" @bind-Value="newTaskReview.TaskId" />
+            </div>
+        </div>
+        
+        <div class="row">
+                <div class="col-md-6">
+                    <label for="Date">Date of Task (as 06/02/2023):</label>
+                    <InputText id="Date" class="form-control" @bind-Value="@Date" />
+                </div>
+            
+               
+                <div class="col-md-6">
+                    <label for="Body">Write your review:</label>
+                    <InputText id="Body" class="form-control" @bind-Value="@newTaskReview.Body" />
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="TranslatorId">Translator Id:</label>
+                <InputNumber id="TranslatorId" class="form-control" @bind-Value="newTaskReview.TranslatorId" />
+            </div>
+                
+            <div class="col-md-6">
+                <label for="LanguageId">Language Id:</label>
+                <InputNumber id="LanguageId" class="form-control" @bind-Value="newTaskReview.LanguageId" />
+            </div>
+            <div class="col-md-6">
+                <label for="Stars">Stars (from 1 to 5):</label>
+                <InputNumber id="Stars" class="form-control" @bind-Value="newTaskReview.Stars" />
+            </div>
+        </div>
+        
+        
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </EditForm>
+        </div>
+
+
+@code {
+    private TaskReview newTaskReview = new();
+    private bool showBanner = false;
+    private string Date;
+    
+    private void AddNewReview()
+    {
+        newTaskReview.DateOfReview = DateTime.Parse(Date); //06/02/2023  
+        newTaskReview.ClientId = 22;
+        Review.AddReviewViaDapper(newTaskReview);
+        showBanner = true;
+    }
+}

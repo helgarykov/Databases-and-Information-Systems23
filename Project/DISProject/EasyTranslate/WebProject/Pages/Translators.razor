@@ -1,0 +1,117 @@
+@page "/retrivetarnslatorswithcategories"
+
+
+@using BlazorProject.Data
+@using global::Data.Models
+@using global::Data.Services
+@using global::Data.ViewModels
+@using Task = System.Threading.Tasks.Task
+@inject ClientFindTranslatorService TranslatorService
+@inject TranslatorCompetenceService CompetenceService
+@inject TranslatorEmploymentService EmploymentService
+
+
+<h5>Get English, German and Russian Translators</h5>
+
+<button class="btn btn-primary" @onclick="GetCertainTranslator">Click me</button>
+<button class="btn btn-primary" @onclick="OnInitialized">Reset</button>
+
+<h5>Get Average Rating of all English, Russian and German Translators</h5>
+<button class="btn btn-primary" @onclick="GetTranslatorsWithRatings">Click me</button>
+<button class="btn btn-primary" @onclick="OnInitialized">Reset</button>
+
+<h5>View most to least experienced German Translators </h5>
+<button class="btn btn-primary" @onclick="GetTranslatorCompetence">Click me</button>
+<button class="btn btn-primary" @onclick="OnInitialized">Reset</button>
+
+
+
+<h3>Translators</h3>
+
+@if (translators == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead> 
+            <tr>
+                @if (translators.Any(t => t is TranslatorWithLanguage))
+                {
+                    <th>TranslatorId</th>
+                    <th>ContactName</th>
+                    <th>Email</th>
+                    <th>Language</th>
+                    <th>CategoryName</th>
+                }
+                @if (translators.Any(t => t is RatedTranslator))
+                {
+                    <th>ContactName</th>
+                    <th>Language</th>
+                    <th>AverageRating</th>
+                }
+                @if (translators.Any(t => t is TranslatorExperience))
+                {
+                    <th>ContactName</th>
+                    <th>TotalExperienceYears</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var translator in translators)
+        {
+            <tr>
+               @if (translator is TranslatorWithLanguage)
+               {
+                   var t = (TranslatorWithLanguage)translator;
+                   <td>@t.TranslatorId</td>
+                   <td>@t.ContactName</td>
+                   <td>@t.Email</td>
+                   <td>@t.Language</td>
+                   <td>@t.CategoryName</td>
+               }
+               @if (translator is RatedTranslator)
+               {
+                   var r = (RatedTranslator)translator;
+                   <td>@r.ContactName</td>
+                   <td>@r.Language</td>
+                   <td>@r.AverageRating</td>
+               }
+               @if (translator is TranslatorExperience)
+               {
+                   var e = (TranslatorExperience)translator;
+                   <td>@e.ContactName</td>
+                   <td>@e.TotalExperienceYears</td>
+               }
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+@code {
+
+    private IEnumerable<Translator>? translators;
+
+    protected override void OnInitialized()
+    {
+        translators = TranslatorService.GetAllTranslatorsViaDapper();
+    }
+
+    protected void GetCertainTranslator()
+    {
+        translators = TranslatorService.GetTranslatorsViaDapper();
+    }
+
+    protected void GetTranslatorsWithRatings()
+    {
+        translators = CompetenceService.GetTranslatorsWithRatings();
+    }
+
+    protected void GetTranslatorCompetence()
+    {
+        translators = EmploymentService.GetTranslatorCompetenceViaDapper();
+    }
+
+}
+
