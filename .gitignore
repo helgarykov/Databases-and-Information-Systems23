@@ -391,6 +391,8 @@ FodyWeavers.xsd
 *.cab
 *.msi
 *.msix
+
+.DS_Store
 *.msm
 *.msp
 
