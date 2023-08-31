@@ -1,6 +1,7 @@
 # Overview of the group (DIS) project
 This project was collaborated on by:
 - Helga Rykov Ibsen (mcv462)
+- Laust Christian Blixencrone-Møller (sbh546)
 - Victor Alexander Schmidt (rqc908)
 
 ## The project in parts
