@@ -1,0 +1,21 @@
+﻿@page "/"
+@using BlazorProject.Data
+@using Dapper
+@using global::Data.Models
+@using global::Data.Services
+@using Task = System.Threading.Tasks.Task
+@inject TaskService NewTask
+@inject LoginIdentity Identity
+
+@using global::Data.Services
+@inject global::Data.Services.TaskService TaskService
+
+<PageTitle>Welcome to Easy Translate</PageTitle>
+
+<h1>Home Travel Agency, welcome back to your Easy Translate site!</h1>
+
+<!-- Add the <img> tag here -->
+<img src="https://www.freeiconspng.com/thumbs/site-internet-
+icon/site-internet-icon-png-27.png" alt="My Image" />
+
+
