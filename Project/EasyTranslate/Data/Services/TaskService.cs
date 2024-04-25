@@ -30,38 +30,85 @@ public class TaskService : ITaskService
             task.Street,
             task.HouseNr,
             task.TranslatorId,
-            task.LanguageId,
-            TranslatorCompetenceId = -1
+            task.LanguageId
         };
-        var sql = "INSERT INTO Task ( ClientId, TaskType, DateOfTask, StartTime, EndTime, " +
-                  "Urgent, Difficult, CityAddress, Street, HouseNr, TranslatorId, LanguageId) " +
-                  "VALUES (@ClientId, @TaskType, @DateOfTask, @StartTime, @EndTime, " +
-                  "@Urgent, @Difficult, @CityAddress, @Street, @HouseNr, @TranslatorId," +
-                  "@LanguageId) " +
-                  "RETURNING Id;";
 
-        var sqlTransCompId = "SELECT tc.Id AS Id " +
-                             "FROM Translator_Competence AS tc " +
-                             "WHERE tc.translatorId = @TranslatorId  " +
-                             "AND tc.languageId = @LanguageId ;";
-
-        var sqlUpdate = "UPDATE Task " +
-                        "SET TranslatorCompetenceId = @TranslatorCompetenceId " +
-                        "WHERE Id = @newTask " +
-                        "RETURNING Id;";
-
-        int newTask = Connection.QuerySingle<int>(sql, parameters);
-        int transCompId = Connection.QuerySingle<int>(sqlTransCompId, parameters);
-            
-        var parameter2 = new
+        // Ensure the connection is open
+        if (Connection.State != ConnectionState.Open)
+            Connection.Open();
+        
+        using (var transaction = Connection.BeginTransaction())
         {
-            TranslatorCompetenceId = transCompId, newTask
-        };
+            try
+            {
+                // Log the task details just before insertion
+                Console.WriteLine($"Attempting to insert task: {System.Text.Json.JsonSerializer.Serialize(task)}");
 
-        int updateTaskTable = Connection.QuerySingle<int>(sqlUpdate, parameter2);
-            
-        return newTask;
+                var sql = @"
+                INSERT INTO Task (ClientId, TaskType, DateOfTask, StartTime, EndTime, Urgent, Difficult, CityAddress, Street, HouseNr, TranslatorId, LanguageId)
+                VALUES (@ClientId, @TaskType, @DateOfTask, @StartTime, @EndTime, @Urgent, @Difficult, @CityAddress, @Street, @HouseNr, @TranslatorId, @LanguageId)
+                RETURNING Id;";
+
+                int newTask = Connection.QuerySingle<int>(sql, parameters, transaction);
+
+                var sqlTransCompId = @"
+                SELECT Id FROM Translator_Competence
+                WHERE translatorId = @TranslatorId AND languageId = @LanguageId;";
+
+                // Validate if there is a competence match
+                int? transCompId = Connection.QuerySingleOrDefault<int?>(sqlTransCompId, parameters, transaction);
+
+                if (!transCompId.HasValue)
+                {
+                    throw new InvalidOperationException("No valid language found for the chosen Translator ID.");
+                }
+
+                var sqlUpdate = @"
+                UPDATE Task
+                SET TranslatorCompetenceId = @TranslatorCompetenceId
+                WHERE Id = @newTask
+                RETURNING Id;";
+
+                Connection.QuerySingle<int>(sqlUpdate, new { TranslatorCompetenceId = transCompId, newTask }, transaction);
+
+                transaction.Commit();
+                return newTask;
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine($"Error occurred: {ex.Message}");
+                throw;  // Rethrow to handle the exception further up the call stack
+            }
+        }
     }
+
+
+    private bool ValidateTranslatorCompetence(int translatorId, int languageId)
+    {
+        // Placeholder logic: replace with actual validation
+        // For example, querying from a database to check if the translator can translate the specified language
+        return translatorId == languageId; // Simulate a match
+    }
+
+    
+    /* Add a new task only if it is not already in the task table */
+    public bool TaskExists(TaskRequest task)
+    {
+        var parameters = new
+        {
+            task.DateOfTask,
+            task.StartTime,
+            task.EndTime
+        };
+        var sql = @"
+        SELECT EXISTS (
+            SELECT 1 FROM Task
+            WHERE DateOfTask = @DateOfTask AND StartTime = @StartTime AND EndTime = @EndTime
+        );";
+        return Connection.QuerySingle<bool>(sql, parameters);
+    }
+
         
     /* Update the task and return the Id of the new task. */
     public async Task UpdateTaskAsync(int taskId, Data.Models.MyTask taskToUpdate)
@@ -129,4 +176,5 @@ public class TaskService : ITaskService
             Console.WriteLine();
         }
     }
+    
 }

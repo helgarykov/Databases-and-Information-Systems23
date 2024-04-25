@@ -8,8 +8,6 @@
 @inject AddClientService Client
 @inject TaskService NewTask
 @inject LoginIdentity Identity
-
-@using global::Data.Services
 @inject global::Data.Services.TaskService TaskService
 
 
@@ -18,6 +16,13 @@
 <h3>NewTask</h3>
 
 <p role="status">Create a new task request: @newTask</p>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @errorMessage
+    </div>
+}
 
 @if (showBanner)
 {
@@ -96,17 +101,28 @@
     private string Date;
     private string StartTime;
     private string EndTime;
+    private string errorMessage;
 
 
     private void AddNewTask()
     {
-        newTask.DateOfTask = DateTime.Parse(Date); //06/02/2023    
-        newTask.StartTime = TimeSpan.Parse(StartTime); //12:30:15
-        newTask.EndTime = TimeSpan.Parse(EndTime);
-        newTask.ClientId = 22;
-        TaskService.AddTaskViaDapper(newTask);
-        showBanner = true;
+        try
+        {
+            newTask.DateOfTask = DateTime.Parse(Date);
+            newTask.StartTime = TimeSpan.Parse(StartTime);
+            newTask.EndTime = TimeSpan.Parse(EndTime);
+            newTask.ClientId = 22; // Assume this is preset or appropriately set
+            TaskService.AddTaskViaDapper(newTask);
+            showBanner = true;
+            errorMessage = ""; // Clear previous error messages if any
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Error creating task: " + ex.Message;
+            showBanner = false; // Do not show the success banner if there's an error
+        }
     }
+
 
 }
 

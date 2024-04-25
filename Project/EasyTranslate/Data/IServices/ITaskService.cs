@@ -12,4 +12,5 @@ public interface ITaskService
     public void DeleteTaskById(int taskId);
     //public int AddTaskViaDapperP();
     
+    public bool TaskExists(TaskRequest task);
 }

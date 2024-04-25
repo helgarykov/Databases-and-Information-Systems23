@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleProject\ConsoleProject.csproj" />
+<!--    <ProjectReference Include="..\ConsoleProject\ConsoleProject.csproj" />-->
     <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>
 

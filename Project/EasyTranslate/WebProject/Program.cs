@@ -12,8 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddTransient<IDbConnection>(provider => new NpgsqlConnection("User ID=postgres;Password=1234;" +
-                                                                              "Host=localhost;Port=5433;" +
+builder.Services.AddTransient<IDbConnection>(provider => new NpgsqlConnection("User ID=postgres;Password=1982;" +
+                                                                              "Host=localhost;Port=5432;" +
                                                                               "Database=easy_translate;"));
 builder.Services.AddSingleton<AddClientService>();
 builder.Services.AddSingleton<LanguageService>();
