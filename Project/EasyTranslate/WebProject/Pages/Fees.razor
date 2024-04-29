@@ -1,14 +1,9 @@
 @page "/retrievefees"
-
-@using BlazorProject.Data
-@using Dapper
 @using global::Data.ViewModels
 @using global::Data.Models
 @using global::Data.Services
-@using Task = System.Threading.Tasks.Task
 @inject FeesAndCategories Fee
 @inject TranslatorWithLowestFeeService LowestFee
-@inject LoginIdentity Identity
 
 <h5>Get German Translators and their Fees — from Lowest to Highest</h5>
 

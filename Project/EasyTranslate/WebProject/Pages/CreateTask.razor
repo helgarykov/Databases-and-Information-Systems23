@@ -1,21 +1,15 @@
 ﻿@page "/createtask"
-
-@using BlazorProject.Data
-@using Dapper
 @using global::Data.ViewModels
 @using global::Data.Services
-@using Task = System.Threading.Tasks.Task
-@inject AddClientService Client
-@inject TaskService NewTask
-@inject LoginIdentity Identity
-@inject global::Data.Services.TaskService TaskService
+@inject TaskService TaskService
 
 
 <PageTitle>Create New Task</PageTitle>
 
 <h3>NewTask</h3>
 
-<p role="status">Create a new task request: @newTask</p>
+<p role="status">Please provide details to create a new task:</p>
+
 
 @if (!string.IsNullOrEmpty(errorMessage))
 {

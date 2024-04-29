@@ -1,9 +1,6 @@
 using System.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using BlazorProject.Data;
 using Data.Services;
-using Data.Models;
 using Npgsql;
 
 
