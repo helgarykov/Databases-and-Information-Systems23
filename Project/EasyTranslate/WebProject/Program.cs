@@ -9,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddTransient<IDbConnection>(provider => new NpgsqlConnection("User ID=postgres;Password=1982;" +
-                                                                              "Host=localhost;Port=5432;" +
+builder.Services.AddTransient<IDbConnection>(provider => new NpgsqlConnection("User ID=postgres;Password=12345;" +
+                                                                              "Host=localhost;Port=5433;" +
                                                                               "Database=easy_translate;"));
 builder.Services.AddSingleton<AddClientService>();
 builder.Services.AddSingleton<LanguageService>();
@@ -42,11 +42,15 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
-
 app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
-app.Run();
+await app.RunAsync();
+
+builder.Services.AddServerSideBlazor().AddCircuitOptions(options => {
+    options.DetailedErrors = true; // Enable error details
+});
+
 

@@ -1,0 +1,9 @@
+To get the full path to the folder, press Alt, then right-click on the folder and chose kopier med stinavn. Check in the terminal if it exists: ls -ld "path" and then the contents of the folder: ls -l "path".
+
+
+ Open and Create a File with vim:
+- If newfile.txt doesn’t exist, it will create it.
+- Press i to enter Insert Mode (start typing).
+- To save and exit:
+- Press Esc
+- Type :wq (write & quit) and press Enter
